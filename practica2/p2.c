@@ -168,8 +168,13 @@ void test(int orden,int alg,int tamini,int nmax,float p) {
     double t,contador=tamini;
     int i;
 	printfalgord(alg,orden);
-    printf("%15s%15s%15s","n","t(n)","t(n)/n^0.8");
-	printf("%15s%15s\n","t(n)/n","t(n)/n^1.2");
+    printf("%14s%14s%14s","n","t(n)","t(n)/n^");
+    printf("%.2f",p-0.2);
+	printf("%13s","t(n)/n^");
+    printf("%.2f",p);
+    printf("%13s","t(n)/n^");
+    printf("%.2f\n",p+0.2);
+
     for(i=1;i<=nmax;i++){
         t=calculartiempos(contador,alg,orden);
         printf("%12.0f%15.3f%15.6f",contador,t,t/pow(contador,p-0.2));
@@ -186,13 +191,13 @@ void test(int orden,int alg,int tamini,int nmax,float p) {
 //hipotesis para shell:  ascendente:1.12, descendente:1.15, aleatorio:1.165
 int main(){
     inicializar_semilla();
-    test(1,1,500,8,2);
-    test(1,1,500,8,2);
-    test(2,1,500,8,2);
-    test(3,1,500,8,2);
+    test(1,1,500,8,2);//se ajusta bien para ascendente
+    //test(1,1,500,8,2);//se ajusta 
+    //test(2,1,500,8,2);//se ajusta bien para descendente
+    //test(3,1,500,8,2);
     test(1,2,500,8,1.12);
-    test(2,2,500,8,1.15);
-    test(3,2,500,8,1.165);
+    //test(2,2,500,8,1.15);//no es ajustada
+    //test(3,2,500,8,1.165);//para aleatorio es exacta
 
 
 

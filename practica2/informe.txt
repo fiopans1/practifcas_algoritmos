@@ -27,6 +27,7 @@ y las n hacen referencia al número de elementos del vector.
 ORDENADOR UTILIZADO PARA LAS PRUEBAS:
 //POner info del ordenador
 
+ORDENACION POR SELECCION:
 
 Ordenacion por seleccion con inicialización ascendente
               n           t(n)     t(n)/n^0.8         t(n)/n     t(n)/n^1.2
@@ -38,8 +39,18 @@ Ordenacion por seleccion con inicialización ascendente
           16000     278170.000       0.007532       0.001087       0.000157
           32000    1103004.000       0.008576       0.001077       0.000135
           64000    4408117.000       0.009843       0.001076       0.000118
+          
+Tras haber estudiado el algoritmo de seleccion se deduce  para un vector ascendente
+ que su complejidad es t(n) = O(n²) debido a:
+t(n)/n^1.8 corresponde a una cota ligeralmente subestimada ya que cuando n tiende a infinito
+el valor de la funcion tiende a infinito.
+t(n)/n² corresponde con la cota ajustada, en el caso del vector inicializado de
+manera ascendete tiende a 0.001076 por iteracion.
+t(n)/n^2.2 corresponde a una cota ligeramente sobreestimada ya que cuando n tiende a infinito el
+valor de la funcion tiende a 0
+
 Ordenacion por seleccion con inicialización descendente
-              n           t(n)     t(n)/n^0.8         t(n)/n     t(n)/n^1.2
+             n          t(n)       t(n)/n^1.80      t(n)/n^2.00      t(n)/n^2.20
 (*)         500        312.014       0.004325       0.001248       0.000360
            1000       1220.000       0.004857       0.001220       0.000306
            2000       4893.000       0.005594       0.001223       0.000267
@@ -48,18 +59,47 @@ Ordenacion por seleccion con inicialización descendente
           16000     311173.000       0.008425       0.001216       0.000175
           32000    1242611.000       0.009662       0.001213       0.000152
           64000    4974425.000       0.011108       0.001214       0.000133
+
+Tras haber estudiado el algoritmo de seleccion se deduce  para un vector descendente
+ que su complejidad es t(n) = O(n²) debido a:
+t(n)/n^1.8 corresponde a una cota ligeralmente subestimada ya que cuando n tiende a infinito
+el valor de la funcion tiende a infinito.
+t(n)/n² corresponde con la cota ajustada,en el caso del vector inicializado 
+de manera descendente tiende a 0.0012 por iteracion.
+t(n)/n^2.2 corresponde a una cota ligeramente sobreestimada ya que cuando n tiende a infinito el
+valor de la funcion tiende a 0.
+
 Ordenacion por seleccion con inicialización aleatorio
-              n           t(n)     t(n)/n^0.8         t(n)/n     t(n)/n^1.2
-(*)         500        299.735       0.004155       0.001199       0.000346
-           1000       1141.000       0.004542       0.001141       0.000287
-           2000       4467.000       0.005107       0.001117       0.000244
-           4000      17550.000       0.005762       0.001097       0.000209
-           8000      69532.000       0.006556       0.001086       0.000180
-          16000     276427.000       0.007485       0.001080       0.000156
-          32000    1102958.000       0.008576       0.001077       0.000135
-          64000    4405929.000       0.009838       0.001076       0.000118
+             n          t(n)       t(n)/n^1.80      t(n)/n^2.00      t(n)/n^2.20
+(*)         500        300.026       0.004159       0.001200       0.000346
+           1000       1139.000       0.004534       0.001139       0.000286
+           2000       4450.000       0.005088       0.001112       0.000243
+           4000      17485.000       0.005741       0.001093       0.000208
+           8000      69428.000       0.006546       0.001085       0.000180
+          16000     276640.000       0.007490       0.001081       0.000156
+          32000    1105840.000       0.008598       0.001080       0.000136
+          64000    4405615.000       0.009837       0.001076       0.000118
+         128000   17617240.000       0.011297       0.001075       0.000102
+         256000   70440523.000       0.012972       0.001075       0.000089
+
+Para el caso de seleccion con inicializacion aleatoria lo hicimos con 11 columnas en vez de 8 porque
+parecía que la cota ajustada era sobreestimada, pero con mas elementos parece que tiende a una constante,
+tras el estudio y hacer pruebas con cotas ligeramente superiores y inferiores llegamos a la conclusión de
+que su  complejidad corresponde con t(n)= 0(n²) debido a:
+
+Tras haber estudiado el algoritmo de seleccion se deduce  para un vector descendente
+ que su complejidad es t(n) = O(n²) debido a:
+t(n)/n^1.8 corresponde a una cota ligeralmente subestimada ya que cuando n tiende a infinito
+el valor de la funcion tiende a infinito.
+t(n)/n² corresponde con la cota ajustada,en el caso del vector inicializado 
+de manera aleatorio tiende a 0.001075 por iteracion.
+t(n)/n^2.2 corresponde a una cota ligeramente sobreestimada ya que cuando n tiende a infinito el
+valor de la funcion tiende a 0.
+
+ORDENACION POR SHELL:
+
 Ordenacion por shell con inicialización ascendente
-              n           t(n)     t(n)/n^0.8         t(n)/n     t(n)/n^1.2
+             n          t(n)       t(n)/n^1.80      t(n)/n^2.00      t(n)/n^2.20
 (*)         500         18.875       0.062063       0.017908       0.005167
 (*)        1000         43.819       0.076149       0.019128       0.004805
 (*)        2000         96.819       0.088923       0.019445       0.004252
@@ -69,7 +109,7 @@ Ordenacion por shell con inicialización ascendente
           32000       1894.000       0.135719       0.017046       0.002141
           64000       4582.000       0.173528       0.018973       0.002074
 Ordenacion por shell con inicialización descendente
-              n           t(n)     t(n)/n^0.8         t(n)/n     t(n)/n^1.2
+             n          t(n)       t(n)/n^1.80      t(n)/n^2.00      t(n)/n^2.20
 (*)         500         28.191       0.076929       0.022197       0.006405
 (*)        1000         60.867       0.085977       0.021596       0.005425
 (*)        2000        137.225       0.100336       0.021941       0.004798
@@ -79,7 +119,7 @@ Ordenacion por shell con inicialización descendente
           32000       3134.000       0.164515       0.020662       0.002595
           64000       6707.000       0.182246       0.019926       0.002179
 Ordenacion por shell con inicialización aleatorio
-              n           t(n)     t(n)/n^0.8         t(n)/n     t(n)/n^1.2
+             n          t(n)       t(n)/n^1.80      t(n)/n^2.00      t(n)/n^2.20
 (*)         500         54.202       0.134744       0.038879       0.011218
 (*)        1000        124.719       0.158830       0.039896       0.010022
 (*)        2000        284.023       0.185293       0.040519       0.008860
