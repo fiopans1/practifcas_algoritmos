@@ -49,6 +49,8 @@ manera ascendete tiende a 0.001076 por iteracion.
 t(n)/n^2.2 corresponde a una cota ligeramente sobreestimada ya que cuando n tiende a infinito el
 valor de la funcion tiende a 0
 
+Conclusion: t(n) = O(n²)
+
 Ordenacion por seleccion con inicialización descendente
              n          t(n)       t(n)/n^1.80      t(n)/n^2.00      t(n)/n^2.20
 (*)         500        312.014       0.004325       0.001248       0.000360
@@ -68,6 +70,8 @@ t(n)/n² corresponde con la cota ajustada,en el caso del vector inicializado
 de manera descendente tiende a 0.0012 por iteracion.
 t(n)/n^2.2 corresponde a una cota ligeramente sobreestimada ya que cuando n tiende a infinito el
 valor de la funcion tiende a 0.
+
+Conclusion: t(n) = O(n²)
 
 Ordenacion por seleccion con inicialización aleatorio
              n          t(n)       t(n)/n^1.80      t(n)/n^2.00      t(n)/n^2.20
@@ -96,20 +100,34 @@ de manera aleatorio tiende a 0.001075 por iteracion.
 t(n)/n^2.2 corresponde a una cota ligeramente sobreestimada ya que cuando n tiende a infinito el
 valor de la funcion tiende a 0.
 
+Conclusion: t(n) = O(n²)
+
 ORDENACION POR SHELL:
 
 Ordenacion por shell con inicialización ascendente
-             n          t(n)       t(n)/n^1.80      t(n)/n^2.00      t(n)/n^2.20
-(*)         500         18.875       0.062063       0.017908       0.005167
-(*)        1000         43.819       0.076149       0.019128       0.004805
-(*)        2000         96.819       0.088923       0.019445       0.004252
-(*)        4000        219.847       0.106715       0.020315       0.003867
-(*)        8000        480.950       0.123384       0.020447       0.003389
-          16000        859.000       0.116467       0.016803       0.002424
-          32000       1894.000       0.135719       0.017046       0.002141
-          64000       4582.000       0.173528       0.018973       0.002074
+             n          t(n)       t(n)/n^0.92      t(n)/n^1.12      t(n)/n^1.32
+(*)         500         19.134       0.062915       0.018153       0.005238
+(*)        1000         39.877       0.069298       0.017407       0.004372
+(*)        2000         94.345       0.086651       0.018948       0.004143
+(*)        4000        216.700       0.105187       0.020024       0.003812
+(*)        8000        480.053       0.123153       0.020409       0.003382
+          16000       1032.000       0.139923       0.020187       0.002912
+          32000       2262.000       0.162089       0.020358       0.002557
+          64000       4874.000       0.184586       0.020182       0.002207
+Para sacar los valores del elevado del n se fueron probando valores entre el 1.00-1.20.
+Tras haber estudiado el algoritmo de seleccion se deduce  para un vector ascendente
+ que su complejidad es t(n) = O(n^1.12) debido a:
+t(n)/n^0.92 corresponde a una cota ligeralmente subestimada ya que cuando n tiende a infinito
+el valor de la funcion tiende a infinito.
+t(n)/n^1.12 corresponde con la cota ajustada,en el caso del vector inicializado 
+de manera ascendente tiende a 0.020 por iteracion.
+t(n)/n^1.32 corresponde a una cota ligeramente sobreestimada ya que cuando n tiende a infinito el
+valor de la funcion tiende a 0.
+
+Conclusion: t(n) = O(n^1.12)
+
 Ordenacion por shell con inicialización descendente
-             n          t(n)       t(n)/n^1.80      t(n)/n^2.00      t(n)/n^2.20
+             n          t(n)       t(n)/n^0.95      t(n)/n^1.15      t(n)/n^1.35
 (*)         500         28.191       0.076929       0.022197       0.006405
 (*)        1000         60.867       0.085977       0.021596       0.005425
 (*)        2000        137.225       0.100336       0.021941       0.004798
@@ -118,13 +136,49 @@ Ordenacion por shell con inicialización descendente
           16000       1333.000       0.135181       0.019503       0.002814
           32000       3134.000       0.164515       0.020662       0.002595
           64000       6707.000       0.182246       0.019926       0.002179
+Para sacar los valores del elevado del n se fueron probando valores entre el 1.00-1.20.
+Tras haber estudiado el algoritmo de seleccion se deduce  para un vector descendente
+ que su complejidad es t(n) = O(n^1.15) debido a:
+t(n)/n^0.95 corresponde a una cota ligeralmente subestimada ya que cuando n tiende a infinito
+el valor de la funcion tiende a infinito.
+t(n)/n^1.15 corresponde con la cota ajustada,en el caso del vector inicializado 
+de manera descendente tiende a 0.020 por iteracion.
+t(n)/n^1.35 corresponde a una cota ligeramente sobreestimada ya que cuando n tiende a infinito el
+valor de la funcion tiende a 0.
+
+Conclusion: t(n) = O(n^1.15)
+
 Ordenacion por shell con inicialización aleatorio
-             n          t(n)       t(n)/n^1.80      t(n)/n^2.00      t(n)/n^2.20
-(*)         500         54.202       0.134744       0.038879       0.011218
-(*)        1000        124.719       0.158830       0.039896       0.010022
-(*)        2000        284.023       0.185293       0.040519       0.008860
-           4000        627.000       0.209546       0.039890       0.007594
-           8000       1445.000       0.247392       0.040999       0.006794
-          16000       3165.000       0.277586       0.040047       0.005778
-          32000       7037.000       0.316168       0.039709       0.004987
-          64000      16244.000       0.373878       0.040878       0.004469
+             n          t(n)       t(n)/n^0.97      t(n)/n^1.17      t(n)/n^1.37
+(*)         500         53.799       0.129650       0.037409       0.010794
+(*)        1000        124.448       0.153105       0.038458       0.009660
+(*)        2000        283.456       0.178027       0.038930       0.008513
+           4000        626.000       0.200713       0.038209       0.007274
+           8000       1420.000       0.232429       0.038519       0.006383
+          16000       3202.000       0.267562       0.038601       0.005569
+          32000       7169.000       0.305818       0.038409       0.004824
+          64000      16231.000       0.353469       0.038647       0.004226
+
+Para sacar los valores del elevado del n se fueron probando valores entre el 1.00-1.20.
+Tras haber estudiado el algoritmo de seleccion y se deduce  para un vector aleatorio
+ que su complejidad es t(n) = O(n^1.17) debido a:
+t(n)/n^0.97 corresponde a una cota ligeralmente subestimada ya que cuando n tiende a infinito
+el valor de la funcion tiende a infinito.
+t(n)/n^1.17 corresponde con la cota ajustada,en el caso del vector inicializado 
+de manera aleatorio tiende a 0.038 por iteracion.
+t(n)/n^1.37 corresponde a una cota ligeramente sobreestimada ya que cuando n tiende a infinito el
+valor de la funcion tiende a 0.
+
+Conclusion: t(n) = O(n^1.17)
+
+
+CONCLUSION FINAL:
+Como se puede apreciar el algoritmo de ordenacion por shell es mucho más rapido y eficidente
+que el de ordenacion por seleccion, incluso a la hora de la ejecucion mientras que el de
+shell era casi instantáneo para imprimir las tablas, el de seleccion tardaba mucho en ejecutar
+cada tabla, resumiendo el algoritmo de seleccion se hace muy ineficiente en su uso comparado 
+con el de shell.
+
+
+
+

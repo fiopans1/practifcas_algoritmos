@@ -188,16 +188,17 @@ void test(int orden,int alg,int tamini,int nmax,float p) {
 //1=ascendente
 //2=descendente
 //3=aleatorio
-//hipotesis para shell:  ascendente:1.12, descendente:1.15, aleatorio:1.165
+//hipotesis para shell:  ascendente:1.12, descendente:1.15, aleatorio:1.17
 int main(){
     inicializar_semilla();
-    test(1,1,500,8,2);//se ajusta bien para ascendente
-    //test(1,1,500,8,2);//se ajusta 
-    //test(2,1,500,8,2);//se ajusta bien para descendente
-    //test(3,1,500,8,2);
+    test(1,1,500,8,2);
+    test(1,1,500,8,2); 
+    test(2,1,500,8,2);
+    test(3,1,500,8,2);
     test(1,2,500,8,1.12);
-    //test(2,2,500,8,1.15);//no es ajustada
-    //test(3,2,500,8,1.165);//para aleatorio es exacta
+    test(2,2,500,8,1.17);
+    test(3,2,500,8,1.17);
+
 
 
 
