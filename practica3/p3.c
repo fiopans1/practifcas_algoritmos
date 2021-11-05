@@ -5,8 +5,8 @@ Ander Varela Martin : ander.varela@udc.es
 Brais Rodruiguez Gonzalez : brais.rodriguez.gonzalez@udc.es
 */
 
-/*!!Falta comprobar el funcionamiento correcto de los algoritmos y hacer los apartados 3 y 4 de inser, 3, 4 y 5
-*/
+/*!!Falta comprobar el funcionamiento correcto de los algoritmos y
+hacer los apartados 3 y 4 de inser, 3, 4 y 5*/
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -15,7 +15,7 @@ Brais Rodruiguez Gonzalez : brais.rodriguez.gonzalez@udc.es
 #include <time.h>
 #include <math.h>
 
-#define UMBRAL 1
+#define UMBRAL 100
 
 void ord_ins (int v [], int n){
 	int i, x, j;
@@ -53,7 +53,6 @@ void mediana3(int v[], int izq , int der){
 void ordenarAux (int v[], int izq , int der){
 	int pivote, m,i,j;
 
-	
 	if(UMBRAL+izq<= der){
 		mediana3(v, izq, der);
 		pivote=v[izq];
@@ -91,29 +90,29 @@ void algoritmo(int v[], int n, int i){
 }
 
 double microsegundos() { /* obtiene la hora del sistema en microsegundos */
-    struct timeval t;
-    if (gettimeofday(&t, NULL) < 0 ){
-        return 0.0;
-    }
-    return (t.tv_usec + t.tv_sec * 1000000.0);
+	struct timeval t;
+	if (gettimeofday(&t, NULL) < 0 ){
+		return 0.0;
+	}
+	return (t.tv_usec + t.tv_sec * 1000000.0);
 }
 
 void inicializar_semilla() {
-srand(time(NULL));
-/* se establece la semilla de una nueva serie de enteros pseudo-aleatorios */
+	srand(time(NULL));
+	/* se establece la semilla de una nueva serie de enteros pseudo-aleatorios */
 }
 
 void aleatorio(int v [], int n) {
-    int i, m=2*n+1;
-    for (i=0; i < n; i++)
-    v[i] = (rand() % m) - n;
-    /* se generan números pseudoaleatorio entre -n y +n */
+	int i, m=2*n+1;
+	for (i=0; i < n; i++)
+		v[i] = (rand() % m) - n;
+	/* se generan números pseudoaleatorio entre -n y +n */
 }
 
 void ascendente(int v [], int n) {
-    int i;
-    for (i=0; i < n; i++)
-        v[i] = i;
+	int i;
+	for (i=0; i < n; i++)
+		v[i] = i;
 }
 
 void descendente(int v[], int n){
@@ -124,9 +123,9 @@ void descendente(int v[], int n){
 }
 
 void iniciarorden(int v[], int n,int elegir){
-    if(elegir==1) ascendente(v,n);
-    if(elegir==2) descendente(v,n);
-    if(elegir==3) aleatorio(v,n);
+	if(elegir==1) ascendente(v,n);
+	if(elegir==2) descendente(v,n);
+	if(elegir==3) aleatorio(v,n);
 }
 
 void printVector(int v[], int n){
@@ -135,7 +134,7 @@ void printVector(int v[], int n){
 		if(i==(n-1)) printf("%d", v[i]);
 		else printf("%d, ", v[i]);
 	}
-    printf("\n");
+	printf("\n");
 }
 
 int ordenado(int v[], int n){
@@ -148,40 +147,40 @@ int ordenado(int v[], int n){
 }
 
 double calculartiempos(int n,int alg,int orden){
-    int v[n],i;
-    double t1,t2,t3,t4,t;
-    iniciarorden(v,n,orden);
-    t1=microsegundos();
-    algoritmo(v,n,alg);
-    t2=microsegundos();
-    t=t2-t1;
-    if(t<500){
-        t1=microsegundos();
-        for(i=0;i<1000;i++){
-            iniciarorden(v,n,orden);
-            algoritmo(v,n,alg);
-        }
-        t2=microsegundos();
-        t3=microsegundos();
-        for(i=0;i<1000;i++){
-            iniciarorden(v,n,orden);
-        }
-        t4=microsegundos();
-        printf("(*)");
-        t=(t2-t1)-(t4-t3);
-        return (t/1000);
-    }else{
-        printf("   ");
-        return t;
-    }
+	int v[n],i;
+	double t1,t2,t3,t4,t;
+	iniciarorden(v,n,orden);
+	t1=microsegundos();
+	algoritmo(v,n,alg);
+	t2=microsegundos();
+	t=t2-t1;
+	if(t<500){
+		t1=microsegundos();
+		for(i=0;i<1000;i++){
+			iniciarorden(v,n,orden);
+			algoritmo(v,n,alg);
+		}
+		t2=microsegundos();
+		t3=microsegundos();
+		for(i=0;i<1000;i++){
+			iniciarorden(v,n,orden);
+		}
+		t4=microsegundos();
+		printf("(*)");
+		t=(t2-t1)-(t4-t3);
+		return (t/1000);
+	}else{
+		printf("   ");
+		return t;
+	}
 }
 
 void printfalgord(int alg, int orden){
-    if(alg==1) printf("Ordenacion por inserccion ");
-    if(alg==2) printf("Ordenacion rapida ");
-    if(orden==1) printf("con inicialización ascendente\n");
-    if(orden==2) printf("con inicialización descendente\n");
-    if(orden==3) printf("con inicialización aleatorio\n");
+	if(alg==1) printf("Ordenacion por inserccion ");
+	if(alg==2) printf("Ordenacion rapida ");
+	if(orden==1) printf("con inicialización ascendente\n");
+	if(orden==2) printf("con inicialización descendente\n");
+	if(orden==3) printf("con inicialización aleatorio\n");
 }
 
 void test(int i, int n){
@@ -197,7 +196,7 @@ void test(int i, int n){
 	printf("Ordenado? %d\n", ordenado(v, n));
 	//Descendente
 	descendente( v, n);
-    printfalgord(i, 2);
+	printfalgord(i, 2);
 	printVector(v, n);
 	printf("Ordenado? %d\n", ordenado(v, n));
 	printf("Ordenando...\n");
@@ -207,22 +206,40 @@ void test(int i, int n){
 }
 
 void tiempos(int orden,int alg,int tamini,int nmax,float p) {
-    double t,contador=tamini;
-    int i;
+	double t,contador=tamini;
+	int i;
 	printfalgord(alg,orden);
-    printf("%14s%14s%14s","n","t(n)","t(n)/n^");
-    printf("%.2f",p-0.2);
+	printf("%14s%14s%14s","n","t(n)","t(n)/n^");
+	printf("%.2f",p-0.2);
 	printf("%13s","t(n)/n^");
-    printf("%.2f",p);
-    printf("%13s","t(n)/n^");
-    printf("%.2f\n",p+0.2);
+	printf("%.2f",p);
+	printf("%13s","t(n)/n^");
+	printf("%.2f\n",p+0.2);
 
-    for(i=1;i<=nmax;i++){
-        t=calculartiempos(contador,alg,orden);
-        printf("%12.0f%15.3f%15.6f",contador,t,t/pow(contador,p-0.2));
-        printf("%15.6f%15.6f\n",t/pow(contador,p),t/pow(contador,p+0.2));
-        contador=contador*2;
-    }
+	for(i=1;i<=nmax;i++){
+		t=calculartiempos(contador,alg,orden);
+		printf("%12.0f%15.3f%15.6f",contador,t,t/pow(contador,p-0.2));
+		printf("%15.6f%15.6f\n",t/pow(contador,p),t/pow(contador,p+0.2));
+		contador=contador*2;
+	}
+}
+void tiempos2(int orden,int alg,int tamini,int nmax,float p) {
+	double t,contador=tamini;
+	int i;
+	printfalgord(alg,orden);
+	printf("%14s%14s%14s","n","t(n)","t(n)/n^");
+	printf("%.2f",p-0.2);
+	printf("%13s","t(n)/n^");
+	printf("%.2f",p);
+	printf("%13s","t(n)/n^");
+	printf("%.2f\n",p+0.2);
+
+	for(i=1;i<=nmax;i++){
+		t=calculartiempos(contador,alg,orden);
+		printf("%12.0f%15.3f%15.6f",contador,t,t/pow(contador,p-0.2));
+		printf("%15.6f%15.6f\n",t/(contador*log(contador)),t/pow(contador,p+0.2));
+		contador=contador*2;
+	}
 }
 
 /*
@@ -250,14 +267,23 @@ Ins		1		1		1
 Rap		1		1		1
 */
 int main(){
-    inicializar_semilla();
-	test(1, 30);
-	test(2, 30);
-    tiempos(1,1,500,8,1.5); 
-    tiempos(2,1,500,8,2);
-    tiempos(3,1,500,8,2);
-    tiempos(1,2,500,8,1.10);
-    tiempos(2,2,500,8,1.17);
-    tiempos(3,2,500,8,1.13);
-    return 0;
+	inicializar_semilla();
+	//test(1, 30);
+	//test(2, 30);
+	//tiempos(1,1,500,8,1.01);
+	//tiempos(1,1,500,8,1.01);
+	//tiempos(1,1,500,8,1.01);
+	//tiempos(1,1,500,8,1.01);
+	//tiempos(1,1,500,8,1.01);
+	tiempos(2,2,500,12,1.14);
+	tiempos2(1,2,500,8,1.01);
+	tiempos2(2,2,500,8,1.01);
+	tiempos2(3,2,500,8,1.01);
+	//tiempos(2,1,500,8,2);
+	//tiempos(3,1,500,8,2);
+	//tiempos(1,2,500,8,1.18);
+	//tiempos(2,2,500,8,1.15);
+	//tiempos(3,2,500,8,1.1);
+	
+	return 0;
 }
