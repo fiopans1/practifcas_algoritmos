@@ -30,6 +30,7 @@ void ord_ins (int v [], int n){
 	}
 }
 
+
 void mediana3(int v[], int izq , int der){
 	int k, m;
 	k=(izq+der)/2;
