@@ -3,9 +3,51 @@ AUTORES:
 	Ander Varela Martin : ander.varela@udc.es
 	Brais Rodruiguez Gonzalez : brais.rodriguez.gonzalez@udc.es
 
-//INTRODUCCIÓN -------------------------------------------
+En este documento aportamos toda la información obtenida al realizar los algoritmos de ordenación por inserción y
+ordenación rápida.
 
-Todas las unidades de tiempo tratadas a continuación están in microsegundos us(10⁻⁶) y las n hacen referencia al
+ORDENACIÓN POR INSERCIÓN:
+
+	Inicialmente se tiene un solo elemento, que obviamente es un conjunto ordenado. Después, cuando hay
+	k elementos ordenados de menor a mayor, se toma el elemento k+1 y se compara con todos los elementos ya ordenados,
+	deteniéndose cuando se encuentra un elemento menor o cuando ya no se encuentran elementos. En este punto se inserta
+	el elemento k+1 debiendo desplazarse los demás elementos.
+	Requiere O(n²) operaciones para ordenar una lista de n elementos.
+
+ORDENACIÓN RÁPIDA:
+
+	El algoritmo trabaja de la siguiente forma:
+
+	-	Elegir un elemento del conjunto de elementos a ordenar, al que llamaremos pivote.
+	-	Resituar los demás elementos de la lista a cada lado del pivote, de manera que a un lado queden todos los menores 
+		que él, y al otro los mayores. Los elementos iguales al pivote pueden ser colocados tanto a su derecha como a su 
+		izquierda, dependiendo de la implementación deseada. En este momento, el pivote ocupa exactamente el lugar que le 
+		corresponderá en la lista ordenada.
+	-	La lista queda separada en dos sublistas, una formada por los elementos a la izquierda del pivote, y otra por los 
+		elementos a su derecha.
+	-	Repetir este proceso de forma recursiva para cada sublista mientras éstas contengan más de un elemento. Una vez 
+		terminado este proceso todos los elementos estarán ordenados.
+
+	Como se puede suponer, la eficiencia del algoritmo depende de la posición en la que termine el pivote elegido.
+
+	-	En el mejor caso, el pivote termina en el centro de la lista, dividiéndola en dos sublistas de igual tamaño. En 
+		este caso, el orden de complejidad del algoritmo es O(n·log n).
+	-	En el peor caso, el pivote termina en un extremo de la lista. El orden de complejidad del algoritmo es entonces 
+		de O(n²). El peor caso dependerá de la implementación del algoritmo, aunque habitualmente ocurre en listas que se
+		encuentran ordenadas, o casi ordenadas. Pero principalmente depende del pivote, si por ejemplo el algoritmo
+		implementado toma como pivote siempre el primer elemento del array, y el array que le pasamos está ordenado, siempre
+		va a generar a su izquierda un array vacío, lo que es ineficiente.
+	-	En el caso promedio, el orden es O(n·log n).
+
+	No es extraño, pues, que la mayoría de optimizaciones que se aplican al algoritmo se centren en la elección del pivote.
+
+
+A continuación vamos a hacer un estudio de los siguientes algoritmos en 3 escenrios diferentes, uno con un vector inicializado
+de manera ascendente, otro de manera descendente y otro de manera aleatorio. cada uno de estos escenarios se lo hacermos a los
+dos algoritmos, además al algoritmo de ordenación rápida cada uno de estos escenarios lo haremos con umbral 1, 10 y 100.
+
+
+Todas las unidades de tiempo tratadas a continuación están en microsegundos µs(10⁻⁶) y las n hacen referencia al
 número de elementos del vector.
 
 
@@ -41,9 +83,6 @@ RAM: 				     16 GB
 
 ORDENACIÓN POR INSERCIÓN:
 
-//INTRODUCCIÓN DE LA ORDENACIÓN POR INSERCIÓN---------------------------------------------
-
-
 Ordenacion por inserccion con inicialización ascendente
 	             n          t(n)       t(n)/n^0.81      t(n)/n^1.01      t(n)/n^1.21
 	(*)         500          1.421       0.009256       0.002671       0.000771
@@ -69,9 +108,6 @@ complejidad es t(n) = O(n^(1.01)) debido a:
 	-	n^(1.21) corresponde a una cota ligeramente sobreestimada debido a que cuando n tiende a infinito, el valor de la
 		función tiende a 0.
 
-//CONCLUSIÓN de inicialización ascendente-------------------------------------------------
-
-
 
 Ordenacion por inserccion con inicialización descendente
 	             n          t(n)       t(n)/n^1.80      t(n)/n^2.00      t(n)/n^2.20
@@ -92,14 +128,11 @@ complejidad es t(n) = O(n²) debido a:
 	-	n^(1.80) corresponde a una cota ligeramente subestimada debido a que cuando n tiende a infinito, el valor de la 
 		función también tiende a infinito.
 
-	-	n² corresponde con la cota ajustada. Con el vector inicializado de forma ascendente tiende a 0.0010205 por
+	-	n² corresponde con la cota ajustada. Con el vector inicializado de forma descendente tiende a 0.0010205 por
 		iteración.
 
 	-	n^(2.20) corresponde a una cota ligeramente sobreestimada debido a que cuando n tiende a infinito, el valor de la
 		función tiende a 0.
-
-//CONCLUSIÓN de inicialización descendente-------------------------------------------------
-
 
 
 Ordenacion por inserccion con inicialización aleatorio
@@ -121,23 +154,32 @@ complejidad es t(n) = O(n^1.99) debido a:
 	-	n^(1.79) corresponde a una cota ligeramente subestimada debido a que cuando n tiende a infinito, el valor de la 
 		función también tiende a infinito.
 
-	-	n^(1.99) corresponde con la cota ajustada. Con el vector inicializado de forma ascendente tiende a 0.0010205 por
+	-	n^(1.99) corresponde con la cota ajustada. Con el vector inicializado de forma aleatorio tiende a 0.00055 por
 		iteración.
 
 	-	n^(2.19) corresponde a una cota ligeramente sobreestimada debido a que cuando n tiende a infinito, el valor de la
 		función tiende a 0.
 
-//CONCLUSIÓN de inicialización desordenada (aleatorio)
 
-
-
-
+//CONCLUSIÓN ORDENACIÓN POR INSERCIÓN
 
 ORDENACIÓN RÁPIDA:
 
-//INTRODUCCIÓN DEL ALGORITMO DE ORDENACIÓN RÁPIDA
+ORDENACIÓN RÁPIDA CON INICIALIZACIÓN ASCENDENTE (Umbral = 1)
 
-Ordenacion rapida con inicialización ascendente (Umbral = 1)
+	             n          t(n)       t(n)/n^0.81	n*log(n)      t(n)/n^1.21
+	(*)         500         10.981       0.071528       0.003534       0.005955
+	(*)        1000         24.536       0.091160       0.003552       0.005752
+	(*)        2000         52.298       0.110828       0.003440       0.005300
+	(*)        4000        112.306       0.135748       0.003385       0.004919
+	(*)        8000        230.938       0.159218       0.003212       0.004373
+	          16000        518.000       0.203701       0.003344       0.004240
+	          32000       1050.000       0.235515       0.003163       0.003715
+	          64000       2120.000       0.271225       0.002993       0.003242
+
+	para la ordenación rápida con inicialización ascendente con Umbral 1 hemos encontrado una cota más ajustada que la teórica:
+
+
 	             n          t(n)       t(n)/n^0.90      t(n)/n^1.10      t(n)/n^1.30
 	(*)         500         11.081       0.041258       0.011905       0.003435
 	(*)        1000         24.360       0.048605       0.012209       0.003067
@@ -148,19 +190,61 @@ Ordenacion rapida con inicialización ascendente (Umbral = 1)
 	          32000       1013.000       0.089325       0.011219       0.001409
 	          64000       2117.000       0.100037       0.010938       0.001196
 
+(*): Tiempo promedio de 1000 ejecuciones del algoritmo, se usa cuendo se obtiene un tiempo de ejecución inferior a 500µs.
 
-Ordenacion rapida con inicialización ascendente (Umbral = 10)
-	             n          t(n)       t(n)/n^0.92      t(n)/n^1.12      t(n)/n^1.32
-	(*)         500          7.444       0.024477       0.007063       0.002038
-	(*)        1000         16.577       0.028808       0.007236       0.001818
-	(*)        2000         38.684       0.035529       0.007769       0.001699
-	(*)        4000         82.864       0.040223       0.007657       0.001458
-	(*)        8000        178.637       0.045828       0.007595       0.001259
-	(*)       16000        385.652       0.052288       0.007544       0.001088
-	          32000        830.000       0.059476       0.007470       0.000938
-	          64000       1752.000       0.066351       0.007255       0.000793
+Tras el estudio del algoritmo de ordenación rápida con un vector ordenado de forma ascendente con umbral 1 obtenemos que su 
+complejidad es t(n) = O(n^(1.10)) debido a:
 
-Ordenacion rapida con inicialización ascendente (Umbral = 100)
+	-	n^(0.90) corresponde a una cota ligeramente subestimada debido a que cuando n tiende a infinito, el valor de la 
+		función también tiende a infinito.
+
+	-	n^(1.10) corresponde con la cota ajustada. Con el vector inicializado de forma ascendente tiende a 0.0117 por
+		iteración.
+
+	-	n^(1.30) corresponde a una cota ligeramente sobreestimada debido a que cuando n tiende a infinito, el valor de la
+		función tiende a 0.
+
+
+ORDENACIÓN RÁPIDA CON INICIALIZACIÓN ASCENDENTE (Umbral = 10)
+
+	             n          t(n)       t(n)/n^0.81	n*log(n)      t(n)/n^1.21
+	(*)         500          7.963       0.051869       0.002563       0.004318
+	(*)        1000         18.013       0.066925       0.002608       0.004223
+	(*)        2000         39.488       0.083682       0.002598       0.004001
+	(*)        4000         87.010       0.105172       0.002623       0.003811
+	(*)        8000        188.926       0.130253       0.002628       0.003577
+	(*)       16000        414.411       0.162965       0.002676       0.003392
+	          32000        875.000       0.196262       0.002636       0.003096
+	          64000       1877.000       0.240137       0.002650       0.002871
+
+(*): Tiempo promedio de 1000 ejecuciones del algoritmo, se usa cuendo se obtiene un tiempo de ejecución inferior a 500µs.
+
+Tras el estudio del algoritmo de ordenación rápida con un vector ordenado de forma ascendente con umbral 10 obtenemos que su 
+complejidad es t(n) = O(n*log(n)) debido a:
+
+	-	n^(0.81) corresponde a una cota ligeramente subestimada debido a que cuando n tiende a infinito, el valor de la 
+		función también tiende a infinito.
+
+	-	n*log(n) corresponde con la cota ajustada. Con el vector inicializado de forma ascendente tiende a 0.0026 por
+		iteración.
+
+	-	n^(1.21) corresponde a una cota ligeramente sobreestimada debido a que cuando n tiende a infinito, el valor de la
+		función tiende a 0.
+
+ORDENACIÓN RÁPIDA CON INICIALIZACIÓN ASCENDENTE (Umbral = 100)
+
+	             n          t(n)       t(n)/n^0.81	n*log(n)      t(n)/n^1.21
+	(*)         500          4.947       0.032224       0.001592       0.002683
+	(*)        1000         10.513       0.039060       0.001522       0.002464
+	(*)        2000         25.180       0.053361       0.001656       0.002552
+	(*)        4000         58.446       0.070646       0.001762       0.002560
+	(*)        8000        135.548       0.093452       0.001885       0.002567
+	(*)       16000        296.561       0.116621       0.001915       0.002427
+	          32000        632.000       0.141757       0.001904       0.002236
+	          64000       1478.000       0.189090       0.002087       0.002260
+
+	para la ordenación rápida con inicialización ascendente con Umbral 100 hemos encontrado una cota más ajustada que la teórica:
+
 	             n          t(n)       t(n)/n^0.98      t(n)/n^1.18      t(n)/n^1.38
 	(*)         500          4.489       0.010166       0.002933       0.000846
 	(*)        1000         11.779       0.013524       0.003397       0.000853
@@ -171,14 +255,35 @@ Ordenacion rapida con inicialización ascendente (Umbral = 100)
 	          32000        708.000       0.027226       0.003419       0.000429
 	          64000       1506.000       0.029361       0.003210       0.000351
 
+(*): Tiempo promedio de 1000 ejecuciones del algoritmo, se usa cuendo se obtiene un tiempo de ejecución inferior a 500µs.
 
-//CONCLUSIÓN ORDENACIÓN RÁPIDA ascendente ---------------------------------------------
+Tras el estudio del algoritmo de ordenación rápida con un vector ordenado de forma ascendente con umbral 100 obtenemos que su 
+complejidad es t(n) = O(n^(1.18)) debido a:
+
+	-	n^(0.98) corresponde a una cota ligeramente subestimada debido a que cuando n tiende a infinito, el valor de la 
+		función también tiende a infinito.
+
+	-	n^(1.18) corresponde con la cota ajustada. Con el vector inicializado de forma ascendente tiende a 0.0033 por
+		iteración.
+
+	-	n^(1.38) corresponde a una cota ligeramente sobreestimada debido a que cuando n tiende a infinito, el valor de la
+		función tiende a 0.
 
 
+ORDENACIÓN RÁPIDA CON INICIALIZACIÓN DESCENDENTE (Umbral = 1)
 
+	             n          t(n)       t(n)/n^0.81	n*log(n)      t(n)/n^1.21
+	(*)         500         11.311       0.073678       0.003640       0.006134
+	(*)        1000         23.312       0.086612       0.003375       0.005465
+	(*)        2000         51.421       0.108970       0.003383       0.005211
+	(*)        4000        109.363       0.132191       0.003296       0.004790
+	(*)        8000        229.277       0.158073       0.003189       0.004341
+	          16000        521.000       0.204880       0.003364       0.004264
+	          32000       1047.000       0.234842       0.003154       0.003704
+	          64000       2147.000       0.274680       0.003031       0.003284
 
+	para la ordenación rápida con inicialización descendente con Umbral 1 hemos encontrado una cota más ajustada que la teórica:
 
-Ordenacion rapida con inicialización descendente (Umbral = 1)
 	             n          t(n)       t(n)/n^0.91      t(n)/n^1.11      t(n)/n^1.31
 	(*)         500         10.933       0.038254       0.011038       0.003185
 	(*)        1000         24.449       0.045526       0.011436       0.002873
@@ -189,20 +294,60 @@ Ordenacion rapida con inicialización descendente (Umbral = 1)
 	          32000       1055.000       0.083862       0.010533       0.001323
 	          64000       2191.000       0.092687       0.010134       0.001108
 
+(*): Tiempo promedio de 1000 ejecuciones del algoritmo, se usa cuendo se obtiene un tiempo de ejecución inferior a 500µs.
 
-Ordenacion rapida con inicialización descendente (Umbral = 10)
-	             n          t(n)       t(n)/n^0.94      t(n)/n^1.14      t(n)/n^1.34
-	(*)         500          7.597       0.022060       0.006365       0.001837
-	(*)        1000         18.227       0.027588       0.006930       0.001741
-	(*)        2000         39.632       0.031266       0.006837       0.001495
-	(*)        4000         87.041       0.035792       0.006814       0.001297
-	(*)        8000        186.569       0.039988       0.006627       0.001098
-	(*)       16000        400.064       0.044695       0.006448       0.000930
-	          32000        852.000       0.049613       0.006231       0.000783
-	          64000       1826.000       0.055423       0.006060       0.000663
+Tras el estudio del algoritmo de ordenación rápida con un vector ordenado de forma descendente con umbral 1 obtenemos que su 
+complejidad es t(n) = O(n^(1.11)) debido a:
 
+	-	n^(0.91) corresponde a una cota ligeramente subestimada debido a que cuando n tiende a infinito, el valor de la 
+		función también tiende a infinito.
 
-Ordenacion rapida con inicialización descendente (Umbral = 100)
+	-	n^(1.11) corresponde con la cota ajustada. Con el vector inicializado de forma descendente tiende a 0.0011 por
+		iteración.
+
+	-	n^(1.31) corresponde a una cota ligeramente sobreestimada debido a que cuando n tiende a infinito, el valor de la
+		función tiende a 0.
+
+ORDENACIÓN RÁPIDA CON INICIALIZACIÓN DESCENDENTE (Umbral = 10)
+
+	             n          t(n)       t(n)/n^0.81	n*log(n)      t(n)/n^1.21
+	(*)         500          8.126       0.052931       0.002615       0.004407
+	(*)        1000         18.325       0.068084       0.002653       0.004296
+	(*)        2000         40.460       0.085742       0.002662       0.004100
+	(*)        4000         87.862       0.106202       0.002648       0.003849
+	(*)        8000        189.612       0.130726       0.002637       0.003590
+	(*)       16000        398.077       0.156542       0.002570       0.003258
+	          32000        909.000       0.203888       0.002738       0.003216
+	          64000       1780.000       0.227727       0.002513       0.002722
+
+(*): Tiempo promedio de 1000 ejecuciones del algoritmo, se usa cuendo se obtiene un tiempo de ejecución inferior a 500µs.
+
+Tras el estudio del algoritmo de ordenación rápida con un vector ordenado de forma descendente con umbral 10 obtenemos que su 
+complejidad es t(n) = O(n*log(n)) debido a:
+
+	-	n^(0.81) corresponde a una cota ligeramente subestimada debido a que cuando n tiende a infinito, el valor de la 
+		función también tiende a infinito.
+
+	-	n*log(n) corresponde con la cota ajustada. Con el vector inicializado de forma descendente tiende a 0.0026 por
+		iteración.
+
+	-	n^(1.21) corresponde a una cota ligeramente sobreestimada debido a que cuando n tiende a infinito, el valor de la
+		función tiende a 0.
+
+ORDENACIÓN RÁPIDA CON INICIALIZACIÓN DESCENDENTE (Umbral = 100)
+
+	             n          t(n)       t(n)/n^0.81	n*log(n)      t(n)/n^1.21
+	(*)         500          4.737       0.030856       0.001524       0.002569
+	(*)        1000         11.487       0.042678       0.001663       0.002693
+	(*)        2000         26.901       0.057008       0.001770       0.002726
+	(*)        4000         61.012       0.073747       0.001839       0.002673
+	(*)        8000        142.981       0.098577       0.001989       0.002707
+	(*)       16000        309.143       0.121569       0.001996       0.002530
+	          32000        726.000       0.162842       0.002187       0.002569
+	          64000       1443.000       0.184612       0.002037       0.002207
+
+	para la ordenación rápida con inicialización descendente con Umbral 100 hemos encontrado una cota más ajustada que la teórica:
+	
 	             n          t(n)       t(n)/n^0.97      t(n)/n^1.17      t(n)/n^1.37
 	(*)         500          4.570       0.011013       0.003178       0.000917
 	(*)        1000         12.022       0.014790       0.003715       0.000933
@@ -213,12 +358,36 @@ Ordenacion rapida con inicialización descendente (Umbral = 100)
 	          32000        643.000       0.027429       0.003445       0.000433
 	          64000       1543.000       0.033602       0.003674       0.000402
 
-//CONCLUSIÓN ORDENACIÓN RÁPIDA descendente --------------------------------------------
+(*): Tiempo promedio de 1000 ejecuciones del algoritmo, se usa cuendo se obtiene un tiempo de ejecución inferior a 500µs.
+
+Tras el estudio del algoritmo de ordenación rápida con un vector ordenado de forma descendente con umbral 100 obtenemos que su 
+complejidad es t(n) = O(n^(1.17)) debido a:
+
+	-	n^(0.97) corresponde a una cota ligeramente subestimada debido a que cuando n tiende a infinito, el valor de la 
+		función también tiende a infinito.
+
+	-	n^(1.17) corresponde con la cota ajustada. Con el vector inicializado de forma descendente tiende a 0.0036 por
+		iteración.
+
+	-	n^(1.37) corresponde a una cota ligeramente sobreestimada debido a que cuando n tiende a infinito, el valor de la
+		función tiende a 0.
 
 
 
+ORDENACIÓN RÁPIDA CON INICIALIZACIÓN ALEATORIO (Umbral = 1)
 
-Ordenacion rapida con inicialización aleatorio (Umbral = 1)
+	             n          t(n)       t(n)/n^0.81	n*log(n)      t(n)/n^1.21
+	(*)         500         33.559       0.218597       0.010800       0.018199
+	(*)        1000         75.207       0.279421       0.010887       0.017630
+	(*)        2000        149.999       0.317873       0.009867       0.015200
+	(*)        4000        321.397       0.388484       0.009688       0.014078
+	           8000        780.000       0.537764       0.010849       0.014769
+	          16000       1547.000       0.608350       0.009988       0.012662
+	          32000       3146.000       0.705647       0.009477       0.011131
+	          64000       7156.000       0.915513       0.010104       0.010944
+
+	para la ordenación rápida con inicialización aleatorio con Umbral 1 hemos encontrado una cota más ajustada que la teórica:
+
 	             n          t(n)       t(n)/n^0.90      t(n)/n^1.10      t(n)/n^1.30
 	(*)         500         32.215       0.119946       0.034609       0.009986
 	(*)        1000         69.581       0.138832       0.034873       0.008760
@@ -229,20 +398,60 @@ Ordenacion rapida con inicialización aleatorio (Umbral = 1)
 	          32000       3098.000       0.273178       0.034310       0.004309
 	          64000       6588.000       0.311309       0.034037       0.003722
 
+(*): Tiempo promedio de 1000 ejecuciones del algoritmo, se usa cuendo se obtiene un tiempo de ejecución inferior a 500µs.
 
-Ordenacion rapida con inicialización aleatorio (Umbral = 10)
-	             n          t(n)       t(n)/n^0.91      t(n)/n^1.11      t(n)/n^1.31
-	(*)         500         33.609       0.117596       0.033931       0.009790
-	(*)        1000         71.104       0.132402       0.033258       0.008354
-	(*)        2000        154.392       0.152999       0.033457       0.007316
-	(*)        4000        328.559       0.173276       0.032986       0.006279
-	           8000        692.000       0.194220       0.032187       0.005334
-	          16000       1449.000       0.216431       0.031224       0.004505
-	          32000       3059.000       0.243160       0.030540       0.003836
-	          64000       6986.000       0.295532       0.032312       0.003533
+Tras el estudio del algoritmo de ordenación rápida con un vector ordenado de forma aleatoria con umbral 1 obtenemos que su 
+complejidad es t(n) = O(n^(1.10)) debido a:
 
+	-	n^(0.90) corresponde a una cota ligeramente subestimada debido a que cuando n tiende a infinito, el valor de la 
+		función también tiende a infinito.
 
-Ordenacion rapida con inicialización aleatorio (Umbral = 100)
+	-	n^(1.10) corresponde con la cota ajustada. Con el vector inicializado de forma aleatoria tiende a 0.034 por
+		iteración.
+
+	-	n^(1.30) corresponde a una cota ligeramente sobreestimada debido a que cuando n tiende a infinito, el valor de la
+		función tiende a 0.
+
+ORDENACIÓN RÁPIDA CON INICIALIZACIÓN ALEATORIO (Umbral = 10)
+
+	             n          t(n)       t(n)/n^0.81	n*log(n)      t(n)/n^1.21
+	(*)         500         28.119       0.183162       0.009049       0.015249
+	(*)        1000         61.311       0.227792       0.008876       0.014373
+	(*)        2000        132.477       0.280741       0.008715       0.013424
+	(*)        4000        291.372       0.352192       0.008783       0.012763
+	           8000        650.000       0.448137       0.009041       0.012308
+	          16000       1391.000       0.547003       0.008981       0.011385
+	          32000       3052.000       0.684562       0.009194       0.010798
+	          64000       6463.000       0.826853       0.009125       0.009885
+
+(*): Tiempo promedio de 1000 ejecuciones del algoritmo, se usa cuendo se obtiene un tiempo de ejecución inferior a 500µs.
+
+Tras el estudio del algoritmo de ordenación rápida con un vector ordenado de forma aleatoria con umbral 10 obtenemos que su 
+complejidad es t(n) = O(n*log(n)) debido a:
+
+	-	n^(0.81) corresponde a una cota ligeramente subestimada debido a que cuando n tiende a infinito, el valor de la 
+		función también tiende a infinito.
+
+	-	n*log(n) corresponde con la cota ajustada. Con el vector inicializado de forma aleatoria tiende a 0.009 por
+		iteración.
+
+	-	n^(1.21) corresponde a una cota ligeramente sobreestimada debido a que cuando n tiende a infinito, el valor de la
+		función tiende a 0.
+
+ORDENACIÓN RÁPIDA CON INICIALIZACIÓN ALEATORIO (Umbral = 100)
+
+	             n          t(n)       t(n)/n^0.81	n*log(n)      t(n)/n^1.21
+	(*)         500         32.665       0.212773       0.010512       0.017715
+	(*)        1000         69.410       0.257883       0.010048       0.016271
+	(*)        2000        148.791       0.315313       0.009788       0.015078
+	(*)        4000        321.024       0.388033       0.009676       0.014062
+	           8000        668.000       0.460547       0.009291       0.012648
+	          16000       1461.000       0.574530       0.009433       0.011958
+	          32000       3049.000       0.683890       0.009185       0.010788
+	          64000       6967.000       0.891333       0.009837       0.010655
+
+para la ordenación rápida con inicialización aleatorio con Umbral 100 hemos encontrado una cota también se ajusta bastante bien:
+
 	             n          t(n)       t(n)/n^0.91      t(n)/n^1.11      t(n)/n^1.31
 	(*)         500         34.281       0.119947       0.034610       0.009986
 	(*)        1000         71.449       0.133044       0.033419       0.008395
@@ -253,8 +462,21 @@ Ordenacion rapida con inicialización aleatorio (Umbral = 100)
 	          32000       3640.000       0.289344       0.036340       0.004564
 	          64000       7352.000       0.311015       0.034005       0.003718
 
-//CONCLUSIÓN ORDENACIÓN RÁPIDA desordenada (aleatorio) --------------------------------
+(*): Tiempo promedio de 1000 ejecuciones del algoritmo, se usa cuendo se obtiene un tiempo de ejecución inferior a 500µs.
+
+Tras el estudio del algoritmo de ordenación rápida con un vector ordenado de forma aleatoria con umbral 100 obtenemos que su 
+complejidad es t(n) = O(n^(1.11)) debido a:
+
+	-	n^(0.91) corresponde a una cota ligeramente subestimada debido a que cuando n tiende a infinito, el valor de la 
+		función también tiende a infinito.
+
+	-	n^(1.11) corresponde con la cota ajustada. Con el vector inicializado de forma aleatoria tiende a 0.035 por
+		iteración.
+
+	-	n^(1.31) corresponde a una cota ligeramente sobreestimada debido a que cuando n tiende a infinito, el valor de la
+		función tiende a 0.
 
 
+//CONCLUSIÓN ORDENACIÓN RÁPIDA
 
 //CONCLUSIÓN FINAL DE LA PRÁCTICA

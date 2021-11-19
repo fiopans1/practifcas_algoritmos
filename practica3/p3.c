@@ -205,24 +205,6 @@ void test(int i, int n){
 	printf("Ordenado? %d\n", ordenado(v, n));
 }
 
-void tiempos(int orden,int alg,int tamini,int nmax,float p) {
-	double t,contador=tamini;
-	int i;
-	printfalgord(alg,orden);
-	printf("%14s%14s%14s","n","t(n)","t(n)/n^");
-	printf("%.2f",p-0.2);
-	printf("%13s","t(n)/n^");
-	printf("%.2f",p);
-	printf("%13s","t(n)/n^");
-	printf("%.2f\n",p+0.2);
-
-	for(i=1;i<=nmax;i++){
-		t=calculartiempos(contador,alg,orden);
-		printf("%12.0f%15.3f%15.6f",contador,t,t/pow(contador,p-0.2));
-		printf("%15.6f%15.6f\n",t/pow(contador,p),t/pow(contador,p+0.2));
-		contador=contador*2;
-	}
-}
 void tiempos2(int orden,int alg,int tamini,int nmax,float p, int modo) {
 	double t,contador=tamini;
 	int i;
@@ -267,31 +249,19 @@ void tiempos2(int orden,int alg,int tamini,int nmax,float p, int modo) {
 3º apartado corresponde a tamano comienzo del vector
 4º apartado nº de repeticiones
 5º apartado cuota ajustada del algoritmo respecto al vector
-
-		!!!PENDIENTE!!!
-Hipotesis de los algoritmos:  
-Alg		Asc		Des		Aleat
-Ins		1		1		1
-Rap		1		1		1
+6º apartado usar n*logn con 1 o de n^x con 2
 */
 int main(){
 	inicializar_semilla();
 	//test(1, 30);
 	//test(2, 30);
-	//tiempos(1,1,500,8,1.01);
-	//tiempos(1,1,500,8,1.01);
-	//tiempos(1,1,500,8,1.01);
-	//tiempos(1,1,500,8,1.01);
-	//tiempos(1,1,500,8,1.01);
-	tiempos(2,2,500,12,1.14);
+	tiempos2(1,1,500,8,1.01,2);
+	tiempos2(1,1,500,8,2.00,2);
+	tiempos2(1,1,500,8,1.99,2);
 	tiempos2(1,2,500,8,1.01,1);
 	tiempos2(2,2,500,8,1.01,1);
 	tiempos2(3,2,500,8,1.01,1);
-	//tiempos(2,1,500,8,2);
-	//tiempos(3,1,500,8,2);
-	//tiempos(1,2,500,8,1.18);
-	//tiempos(2,2,500,8,1.15);
-	//tiempos(3,2,500,8,1.1);
+
 	
 	return 0;
 }
