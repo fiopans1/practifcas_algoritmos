@@ -15,7 +15,7 @@ hacer los apartados 3 y 4 de inser, 3, 4 y 5*/
 #include <time.h>
 #include <math.h>
 
-#define UMBRAL 100
+#define UMBRAL 10
 
 void ord_ins (int v [], int n){
 	int i, x, j;
@@ -29,7 +29,6 @@ void ord_ins (int v [], int n){
 		v[j+1] = x;
 	}
 }
-
 
 void mediana3(int v[], int izq , int der){
 	int k, m;
@@ -224,22 +223,30 @@ void tiempos(int orden,int alg,int tamini,int nmax,float p) {
 		contador=contador*2;
 	}
 }
-void tiempos2(int orden,int alg,int tamini,int nmax,float p) {
+void tiempos2(int orden,int alg,int tamini,int nmax,float p, int modo) {
 	double t,contador=tamini;
 	int i;
 	printfalgord(alg,orden);
 	printf("%14s%14s%14s","n","t(n)","t(n)/n^");
 	printf("%.2f",p-0.2);
-	printf("%13s","t(n)/n^");
-	printf("%.2f",p);
+	if(modo==1){ printf("\tn*log(n)"); 
+	}else{printf("%13s","t(n)/n^");printf("%.2f",p);}
 	printf("%13s","t(n)/n^");
 	printf("%.2f\n",p+0.2);
-
-	for(i=1;i<=nmax;i++){
-		t=calculartiempos(contador,alg,orden);
-		printf("%12.0f%15.3f%15.6f",contador,t,t/pow(contador,p-0.2));
-		printf("%15.6f%15.6f\n",t/(contador*log(contador)),t/pow(contador,p+0.2));
-		contador=contador*2;
+	if(modo==1){
+		for(i=1;i<=nmax;i++){
+			t=calculartiempos(contador,alg,orden);
+			printf("%12.0f%15.3f%15.6f",contador,t,t/pow(contador,p-0.2));
+			printf("%15.6f%15.6f\n",t/(contador*log(contador)),t/pow(contador,p+0.2));
+			contador=contador*2;
+		}
+	}else{
+		for(i=1;i<=nmax;i++){
+			t=calculartiempos(contador,alg,orden);
+			printf("%12.0f%15.3f%15.6f",contador,t,t/pow(contador,p-0.2));
+			printf("%15.6f%15.6f\n",t/pow(contador,p),t/pow(contador,p+0.2));
+			contador=contador*2;
+		}	
 	}
 }
 
@@ -277,9 +284,9 @@ int main(){
 	//tiempos(1,1,500,8,1.01);
 	//tiempos(1,1,500,8,1.01);
 	tiempos(2,2,500,12,1.14);
-	tiempos2(1,2,500,8,1.01);
-	tiempos2(2,2,500,8,1.01);
-	tiempos2(3,2,500,8,1.01);
+	tiempos2(1,2,500,8,1.01,1);
+	tiempos2(2,2,500,8,1.01,1);
+	tiempos2(3,2,500,8,1.01,1);
 	//tiempos(2,1,500,8,2);
 	//tiempos(3,1,500,8,2);
 	//tiempos(1,2,500,8,1.18);
