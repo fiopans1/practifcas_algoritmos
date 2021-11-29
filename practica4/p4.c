@@ -75,17 +75,17 @@ for(i = 1; i < nodos; i++) {
 for(i=1;i<nodos;i++){
     min=99;
     for(j=1;j<nodos;j++){
-        if(distanciaMinima[j]>=0 && distanciaMinima[j]<min){
+        if(0<=distanciaMinima[j] && distanciaMinima[j]<min){
             min=distanciaMinima[j];
             k=j;
         }
     }
-    a.x=k;
-    a.y=masProximo[k];
+    a.x=masProximo[k];
+    a.y=k;
     a.peso=distanciaMinima[k];
-    insertar(a,aristas);
+    insertar(a,&aristas);
     distanciaMinima[k]=-1;
-    for(j=2;j<nodos;j++){
+    for(j=1;j<nodos;j++){
         if(m[j,k]<distanciaMinima[j]){
             distanciaMinima[j]=m[j,k];
             masProximo[j]=k;
