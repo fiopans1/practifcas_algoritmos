@@ -272,12 +272,12 @@ int main(){
 	test(1);
 	test(2);
 	test(3);
-	tiempos(25,8,1.98);
-	tiempos(25,8,1.99);
-	tiempos(25,8,2.01);
-	tiempos(25,8,2);
-	tiempos(25,8,2.02);
-	tiempos(25,8,2.03);
+	tiempos(10,8,1.98);
+	tiempos(10,8,1.99);
+	tiempos(10,8,2.01);
+	tiempos(10,8,2);
+	tiempos(10,8,2.02);
+	tiempos(10,8,2.03);
 	
 	return 0;
 }
