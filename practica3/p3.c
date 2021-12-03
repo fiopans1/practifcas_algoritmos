@@ -138,8 +138,9 @@ void printVector(int v[], int n){
 }
 
 int ordenado(int v[], int n){
-	int i, b, a=v[0];
+	int i, b,a;
 	for(i=1; i<n;i++){
+		a=v[i-1];
 		b=v[i];
 		if(a>b) return 0;
 	}
