@@ -1,3 +1,9 @@
+/*
+AUTORES:
+Diego Suarez Ramos : diego.suarez.ramos@udc.es
+Ander Varela Martin : ander.varela@udc.es
+Brais Rodruiguez Gonzalez : brais.rodriguez.gonzalez@udc.es
+*/
 #include <stdio.h>
 #include <stdbool.h>
 #include <sys/time.h>
@@ -211,42 +217,35 @@ void test(int opcion){
 	imprimir_arbol(&c);
 	liberar_matriz(m,n);
 }
-
-float calcularTiempos(int n){
-	matriz m;
+double calcularTiempos(int n){
 	int i;
-	double t1,t2,t3,t4,t;
+	double t1,t2,t;
+	matriz m;
 	cola c;
-	
 	m=crear_matriz(n);
 	inicializar_matriz(m, n);
 	t1=microsegundos();
+
 	prim(m, n, &c);
+
 	t2=microsegundos();
 	t=t2-t1;
 	if(t<500){
 		t1=microsegundos();
 		for(i=0;i<1000;i++){
-			m=crear_matriz(n);
-			inicializar_matriz(m, n);
+
 			prim(m, n, &c);
 		}
 		t2=microsegundos();
-		t3=microsegundos();
-		for(i=0;i<1000;i++){
-			m=crear_matriz(n);
-			inicializar_matriz(m, n);
-		}
-		t4=microsegundos();
 		printf("(*)");
-		t=(t2-t1)-(t4-t3);
 		liberar_matriz(m, n);
-		return (t/1000);
+		return ((t2-t1)/1000);
 	}else{
 		printf("   ");
 		liberar_matriz(m, n);
 		return t;
 	}
+
 }
 
 void tiempos(int tamini, int nmax, float p) {
@@ -266,18 +265,19 @@ void tiempos(int tamini, int nmax, float p) {
 		contador=contador*2;
 	}
 }
-
+/*Para la funcion tiempos:
+-1 PARAMETRO: Valor inicial
+-2 PARAMETRO: Numero de columnas
+-3 PARAMETRO: z correspondiente a n^z*/
 int main(){
 	
 	test(1);
 	test(2);
 	test(3);
-	tiempos(10,8,1.98);
-	tiempos(10,8,1.99);
-	tiempos(10,8,2.01);
-	tiempos(10,8,2);
-	tiempos(10,8,2.02);
-	tiempos(10,8,2.03);
+	tiempos(10,7,2);
+	tiempos(10,7,2);
+	tiempos(10,7,2);
+
 	
 	return 0;
 }
