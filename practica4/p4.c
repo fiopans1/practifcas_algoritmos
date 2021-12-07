@@ -15,12 +15,12 @@ Brais Rodruiguez Gonzalez : brais.rodriguez.gonzalez@udc.es
 #define INF (TAM_MAX+1)
 typedef int ** matriz;
 typedef struct {
-    int x, y, peso;
+	int x, y, peso;
 } arista;
 typedef arista tipo_elemento;
 typedef struct {
-    int cabeza, final, tamano;
-    tipo_elemento vector[TAM_MAX];
+	int cabeza, final, tamano;
+	tipo_elemento vector[TAM_MAX];
 } cola;
 void crear_cola(cola *);
 int cola_vacia(cola);
@@ -31,44 +31,47 @@ void mostrar_cola(cola);
 
 //CODIGO COLA:
 void crear_cola(cola *c) {
-    c->tamano = 0;
-    c->cabeza = 0;
-    c->final = -1;
+	c->tamano = 0;
+	c->cabeza = 0;
+	c->final = -1;
 }
+
 int cola_vacia(cola c) {
-    return (c.tamano == 0);
+	return (c.tamano == 0);
 }
+
 void incrementar(int *x) { /* privado */
-    if (++(*x) == TAM_MAX)
-        *x = 0;
+	if (++(*x) == TAM_MAX)
+		*x = 0;
 }
+
 void insertar(tipo_elemento x, cola *c) {
-    if (c->tamano == TAM_MAX) {
-        printf("error: cola llena: %d\n", c->tamano);
-        exit(EXIT_FAILURE);
-    }
-    c->tamano++;
-    incrementar(&(c->final));
-    c->vector[c->final] = x;
+	if (c->tamano == TAM_MAX) {
+		printf("error: cola llena: %d\n", c->tamano);
+		exit(EXIT_FAILURE);
+	}
+	c->tamano++;
+	incrementar(&(c->final));
+	c->vector[c->final] = x;
 }
 
 tipo_elemento primero(cola c) {
-    if (cola_vacia(c)) {
-        printf("error: cola vacia\n"); exit(EXIT_FAILURE);
-    }
-    return(c.vector[c.cabeza]);
+	if (cola_vacia(c)) {
+		printf("error: cola vacia\n"); exit(EXIT_FAILURE);
+	}
+	return(c.vector[c.cabeza]);
 }
 
 tipo_elemento quitar_primero(cola *c) {
-    tipo_elemento x;
-    if (cola_vacia(*c)) {
-        printf("error: cola vacia\n");
-        exit(EXIT_FAILURE);
-    }
-    c->tamano--;
-    x = c->vector[c->cabeza];
-    incrementar(&(c->cabeza));
-    return x;
+	tipo_elemento x;
+	if (cola_vacia(*c)) {
+		printf("error: cola vacia\n");
+		exit(EXIT_FAILURE);
+	}
+	c->tamano--;
+	x = c->vector[c->cabeza];
+	incrementar(&(c->cabeza));
+	return x;
 }
 
 void imprimir_arbol(cola *c){
@@ -78,9 +81,9 @@ void imprimir_arbol(cola *c){
 	printf("Aristas: ");
 	while (!cola_vacia(*c)) {
 		x= quitar_primero(c);
-        printf("(%d,%d) ", x.x, x.y);
+		printf("(%d,%d) ", x.x, x.y);
 		peso+=x.peso;
-    }
+	}
 	printf("\nPeso: %d\n", peso);
 }
 //FIN COLA
@@ -133,35 +136,35 @@ void prim(matriz m, int nodos, cola *aristas) {
 
 
 matriz crear_matriz(int n) {
-    int i;
-    matriz aux;
-    if ((aux = malloc(n*sizeof(int *))) == NULL)
-        return NULL;
-    for (i=0; i<n; i++)
-        if ((aux[i] = malloc(n*sizeof(int))) == NULL)
-            return NULL;
-    return aux;
+	int i;
+	matriz aux;
+	if ((aux = malloc(n*sizeof(int *))) == NULL)
+		return NULL;
+	for (i=0; i<n; i++)
+		if ((aux[i] = malloc(n*sizeof(int))) == NULL)
+			return NULL;
+	return aux;
 }
 
 void inicializar_matriz(matriz m, int n) {
 /* Crea un grafo completo no dirigido con valores aleatorios entre 1 y n */
-    int i, j;
-    for (i=0; i<n; i++)
-        for (j=i+1; j<n; j++)
-            m[i][j] = rand() % n + 1;
-    for (i=0; i<n; i++)
-        for (j=0; j<=i; j++)
-            if (i==j)
-                m[i][j] = 0;
-            else
-                m[i][j] = m[j][i];
+	int i, j;
+	for (i=0; i<n; i++)
+		for (j=i+1; j<n; j++)
+			m[i][j] = rand() % n + 1;
+	for (i=0; i<n; i++)
+		for (j=0; j<=i; j++)
+			if (i==j)
+				m[i][j] = 0;
+			else
+				m[i][j] = m[j][i];
 }
 
 void liberar_matriz(matriz m, int n) {
-    int i;
-    for (i=0; i<n; i++)
-        free(m[i]);
-    free(m);
+	int i;
+	for (i=0; i<n; i++)
+		free(m[i]);
+	free(m);
 }
 
 //Test:
@@ -200,11 +203,11 @@ matriz iniciarMatrizTest(int n){
 			break;
 	}
 	for (i=0; i<n; i++)
-        for (j=0; j<=i; j++)
-            if (i==j)
-                m[i][j] = 0;
-            else
-                m[i][j] = m[j][i];
+		for (j=0; j<=i; j++)
+			if (i==j)
+				m[i][j] = 0;
+			else
+				m[i][j] = m[j][i];
 	return m;
 }
 
