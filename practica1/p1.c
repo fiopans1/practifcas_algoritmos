@@ -1,3 +1,12 @@
+/*
+AUTORES:
+Diego Suarez Ramos : diego.suarez.ramos@udc.es
+Ander Varela Martin : ander.varela@udc.es
+Brais Rodruiguez Gonzalez : brais.rodriguez.gonzalez@udc.es
+
+
+*/
+
 #include <stdio.h>
 #include <sys/time.h>
 #include <stdlib.h>
@@ -62,9 +71,10 @@ void listar_vector(int v[], int n){
     printf("]");
 }
 
-double comprobar(int z){
+double comprobarSum1(int z){
     double t1,t2,t;
     int v[z];
+    int i;
     aleatorio(v, z);
     t1=microsegundos();
     sumaSubMax1(v, z);
@@ -72,20 +82,22 @@ double comprobar(int z){
     t=t2-t1;
     if(t<500){
         t1=microsegundos();
-        for(int i=0;i<1000;i++){
+        for(i=0;i<1000;i++){
             sumaSubMax1(v,z);
         }
         t2=microsegundos();
         printf("*");
         return ((t2-t1)/1000);
     }else{
+        printf(" ");
         return t;
     }
 
 }
-double comprobar1(int z){
+double comprobarSum2(int z){
     double t1,t2,t;
     int v[z];
+    int i;
     aleatorio(v, z);
     t1=microsegundos();
     sumaSubMax2(v, z);
@@ -93,28 +105,30 @@ double comprobar1(int z){
     t=t2-t1;
     if(t<500){
         t1=microsegundos();
-        for(int i=0;i<10000;i++){
+        for(i=0;i<10000;i++){
             sumaSubMax2(v,z);
         }
         t2=microsegundos();
         printf("*");
         return ((t2-t1)/10000);
     }else{
+        printf(" ");
         return t;
     }
 
 }
 
+//TEST:
 void test1() {
 	int i, a, b;
 	int v[6][5]={{ -9,2,-5,-4, 6},  
-              { 4,0,9,2,5},  
-              { -2,-1,-9,-7,-1},
-			  { 9,-2,1,-7,-8},
-			  { 15,-2,-5,-4,16},  
-              { 7,-5,6,7,-7}};
+                { 4,0,9,2,5},  
+                { -2,-1,-9,-7,-1},
+                { 9,-2,1,-7,-8},
+                { 15,-2,-5,-4,16},  
+                { 7,-5,6,7,-7}};
 	printf("test\n");
-	printf("%33s%15s%15s\n", "", "sumaSubMax1", "sumaSubMax2");
+	printf("%25s%15s%15s\n", "", "sumaSubMax1", "sumaSubMax2");
 	for (i=0; i<6; i++) {
 		listar_vector(v[i], 5);
 		a = sumaSubMax1(v[i], 5);
@@ -127,7 +141,7 @@ void test2() {
     int i, a, b;
     int v[9];
     printf("test\n");
-    printf("%33s%20s%20s\n", "", "sumaSubMax1", "sumaSubMax2");
+    printf("%35s%20s%15s\n", "", "sumaSubMax1", "sumaSubMax2");
     for (i=0; i<10; i++) {
         aleatorio(v, 9);
         listar_vector(v, 9);
@@ -137,46 +151,35 @@ void test2() {
     }
 }
 
-void test4() {//para sum2
-    double t;
-    printf("n   t(n)   t(n)/n^1.8   t(n)/n^2   t(n)/n^2.2\n");
-    t=comprobar1(500);
-    printf("%3d %3f %3f %3.9f %3f\n",500, t, t/pow(500,0.8),t/pow(500,1),t/pow(500,1.2));
-    t=comprobar1(1000);
-    printf("%3d %3f %3f %3.9f %3f\n",1000, t, t/pow(1000,0.8),t/pow(1000,1),t/pow(1000,1.2));
-     t=comprobar1(2000);
-    printf("%3d %3f %3f %3.9f %3f\n",2000, t, t/pow(2000,0.8),t/pow(2000,1),t/pow(2000,1.2));
-     t=comprobar1(4000);
-    printf("%3d %3f %3f %3.9f %3f\n",4000, t, t/pow(4000,0.8),t/pow(4000,1),t/pow(4000,1.2));
-     t=comprobar1(8000);
-    printf("%3d %3f %3f %3.9f %3f\n",8000, t, t/pow(8000,0.8),t/pow(8000,1),t/pow(8000,1.2));
-     t=comprobar1(16000);
-    printf("%3d %3f %3f %3.9f %3f\n",16000, t, t/pow(16000,0.8),t/pow(16000,1),t/pow(16000,1.2));
-     t=comprobar1(32000);
-    printf("%3d %3f %3f %3.9f %3f\n",32000, t, t/pow(32000,0.8),t/pow(32000,1),t/pow(32000,1.2));
-}
 void test3() {//para sum1
-    //int i, a, b;
-    //int v[M];
-    double t;
-    printf("n   t(n)   t(n)/n^1.8   t(n)/n^2   t(n)/n^2.2\n");
-    t=comprobar(500);
-    printf("%3d %3f %3f %3f %3f\n",500, t, t/pow(500,1.8),t/pow(500,2),t/pow(500,2.2));
-    t=comprobar(1000);
-    printf("%3d %3f %3f %3f %3f\n",1000, t, t/pow(1000,1.8),t/pow(1000,2),t/pow(1000,2.2));
-     t=comprobar(2000);
-    printf("%3d %3f %3f %3f %3f\n",2000, t, t/pow(2000,1.8),t/pow(2000,2),t/pow(2000,2.2));
-     t=comprobar(4000);
-    printf("%3d %3f %3f %3f %3f\n",4000, t, t/pow(4000,1.8),t/pow(4000,2),t/pow(4000,2.2));
-     t=comprobar(8000);
-    printf("%3d %3f %3f %3f %3f\n",8000, t, t/pow(8000,1.8),t/pow(8000,2),t/pow(8000,2.2));
-     t=comprobar(16000);
-    printf("%3d %3f %3f %3f %3f\n",16000, t, t/pow(16000,1.8),t/pow(16000,2),t/pow(16000,2.2));
-     t=comprobar(32000);
-    printf("%3d %3f %3f %3f %3f\n",32000, t, t/pow(32000,1.8),t/pow(32000,2),t/pow(32000,2.2));
+    double t,contador;
+
+	printf("SumaSubMax 1\n");
+    printf("%15s%15s%15s","n","t(n)","t(n)/n^1.8");
+    printf("%15s%15s\n","t(n)/n^2","t(n)/n^2.2");
+    for(contador=500;contador<=32000;contador*=2){
+        t=comprobarSum1(contador);
+        printf("%15.0f%15.3f%15.6f",contador,t,t/pow(contador,1.8));
+        printf("%15.6f%15.6f\n",t/pow(contador,2),t/pow(contador,2.2));
+    }
 }
+
+void test4() {//para sum2
+    double t,contador;
+	printf("SumaSubMax 2\n");
+    printf("%15s%15s%15s","n","t(n)","t(n)/n^0.8");
+	printf("%15s%15s\n","t(n)/n","t(n)/n^1.2");
+    for(contador=500;contador<=32000;contador*=2){
+        t=comprobarSum2(contador);
+        printf("%15.0f%15.3f%15.6f",contador,t,t/pow(contador,0.8));
+        printf("%15.6f%15.6f\n",t/pow(contador,1),t/pow(contador,1.2));
+    }
+}
+
 int main() {
     inicializar_semilla();
+    test1();
+    test2();
     test3();
     test3();
     test3();

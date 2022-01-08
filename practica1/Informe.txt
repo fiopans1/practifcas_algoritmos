@@ -1,0 +1,113 @@
+AUTORES:
+Diego Suarez Ramos : diego.suarez.ramos@udc.es
+Ander Varela Martin : ander.varela@udc.es
+Brais Rodruiguez Gonzalez : brais.rodriguez.gonzalez@udc.es
+
+
+Este documento aporta toda la informacion obtenida al realizar los algoritmos pedidos en la 
+primera practica de la asignatura de algoritmos(SumaSubMáxima).
+
+SUMASUBMAXIMA:
+El problema del subvector de suma máxima consiste en encontrar un subvector de una determinada
+longitud m cuya suma sea máxima dentro de un vector de longitud n, con m≤n.
+Este problema se puede resolver aplicando la técnica del algoritmo divide y vencerás,
+formando problemas cada vez más pequeños hasta alcanzar un caso base y posteriormente combinando las soluciones obtenidas.
+En concreto, la forma de aplicar el método algorítmico citado consiste en obtener los segmentos de suma máxima
+correspondientes a las mitades izquierda y derecha del vector y a la parte central para, una vez calculados,
+elegir el máximo de los tres. El algoritmo tiene un coste lineal respecto al tiempo. 
+
+A continuación vamos a hacer un estudio del algoritmo con un vector de numeros aleatorios.
+
+En este documento sobre el algoritmo se incluye las caracteristicas del
+ordenador usado para obtener los tiempos ademas de los resultados de los analisis y sus 
+correspondientes conclusiones.
+
+Todas las unidades de tiempo tratadas a continuación están en microsegundos µs(10^-6),
+y las n hacen referencia al número de elementos del vector.
+
+ORDENADOR UTILIZADO PARA LAS PRUEBAS:
+Arquitectura:                        x86_64
+modo(s) de operación de las CPUs:    32-bit, 64-bit
+Orden de los bytes:                  Little Endian
+Address sizes:                       43 bits physical, 48 bits virtual
+CPU(s):                              8
+Lista de la(s) CPU(s) en línea:      0-7
+Hilo(s) de procesamiento por núcleo: 2
+Núcleo(s) por «socket»:              4
+«Socket(s)»                          1
+Modo(s) NUMA:                        1
+ID de fabricante:                    AuthenticAMD
+Familia de CPU:                      23
+Modelo:                              24
+Nombre del modelo:                   AMD Ryzen 5 3550H with Radeon Vega Mobile G
+                                     fx
+Revisión:                            1
+Frequency boost:                     enabled
+CPU MHz:                             1700.000
+CPU MHz máx.:                        2100,0000
+CPU MHz mín.:                        1400,0000
+BogoMIPS:                            4191.82
+Virtualización:                      AMD-V
+Caché L1d:                           128 KiB
+Caché L1i:                           256 KiB
+Caché L2:                            2 MiB
+Caché L3:                            4 MiB
+RAM:                                 16 GB
+
+ 
+SumaSubMax 1
+              n           t(n)     t(n)/n^1.8       t(n)/n^2     t(n)/n^2.2
+*            500        463.914       0.006431       0.001856       0.000535
+            1000       1834.000       0.007301       0.001834       0.000461
+            2000       7308.000       0.008355       0.001827       0.000400
+            4000      29146.000       0.009569       0.001822       0.000347
+            8000     116401.000       0.010975       0.001819       0.000301
+           16000     465288.000       0.012598       0.001818       0.000262
+           32000    1864619.000       0.014498       0.001821       0.000229
+
+*: tiempo promedio de 1000 ejecuciones del algoritmo
+Tabla SumaSubMax1: estudio de la complejidad de la busqueda del valor máximo de la suma de
+la subsecuencia máxima. Implementado a partir de dos bucles, uno que recorre la lista y otro
+que recorre la lista desde la posicion actual comprobando con una condicion si el caso se guarda.
+
+Tras el estudio del algoritmo se deduce que corresponden a un : t(n) = O(n^2) debido a:
+-n^2.2 corresponde a una cota ligeramente sobrestimada ya que cuando n tiende a infinito 
+ el valor de la funcion tiende a 0.
+-n^2 corresponde con la cota ajustada que tiende a 0.0018 por iteracion.
+-n^1.8 corresponde a una cota ligeramente subestimada ya que cuando n tiende a infinito 
+ el valor de la funcion tiende a infinito.
+
+Conclusion: t(n) = O(n^2)
+
+SumaSubMax 2
+              n           t(n)     t(n)/n^0.8         t(n)/n     t(n)/n^1.2
+*            500          1.436       0.009954       0.002872       0.000829
+*           1000          2.658       0.010583       0.002658       0.000668
+*           2000          5.295       0.012107       0.002647       0.000579
+*           4000         11.191       0.014697       0.002798       0.000533
+*           8000         21.186       0.015980       0.002648       0.000439
+*          16000         42.191       0.018278       0.002637       0.000380
+*          32000         82.789       0.020599       0.002587       0.000325
+
+*: tiempo promedio de 10000 ejecuciones del algoritmo
+--En este caso la iteracion con 500 elementos es un anomala y es recomendable descalificarla--
+
+Tabla SumaSubMax2: estudio de la complejidad de la busqueda del valor máximo de la suma de la 
+subsecuencia máxima. Implementada a partir de un bucle que rrecorre el vector y dos condiciones.
+
+Tras el estudio del algoritmo se deduce que corresponden a un : t(n) = O(n^2) debido a:
+-n^1.2 corresponde a una cota ligeramente sobrestimada ya que cuando n tiende a infinito 
+ el valor de la funcion tiende a 0.
+-n corresponde con la cota ajustada que tiende a 0.0026 por iteracion.
+-n^0.8 corresponde a una cota ligeramente subestimada ya que cuando n tiende a infinito 
+ el valor de la funcion tiende a infinito.
+
+Conclusion: t(n) = O(g(n))
+
+CONCLUSIÓN:
+Como se puede ver la eficiencia de SumaSubMax2 es muy superior a la de SumaSubMax1, además
+mientras una tiene una complejidad lineal el otro tiene una complejidad cuadrática, por lo tanto
+cuanto mayor sea la cantidad de elementos mayor será la diferencia entre uno el tiempo que tardan
+los algoritmos en ejecutarse. Por lo tanto podemos concluir que no tiene sentido usar el sumaSubMax1
+teniendo a SumaSubMax2 que es mucho más eficiente.
+ 
