@@ -26,7 +26,7 @@ void ord_sel(int v[], int n){
 void ord_shell(int v[], int n){
     int incremento=n-1;
     int i,j,tmp;
-bool seguir;
+    bool seguir;
     do{
         incremento=incremento/2;
         for(i=incremento;i<n;i++){
@@ -63,8 +63,8 @@ double microsegundos() { /* obtiene la hora del sistema en microsegundos */
     return (t.tv_usec + t.tv_sec * 1000000.0);
 }
 void inicializar_semilla() {
-srand(time(NULL));
-/* se establece la semilla de una nueva serie de enteros pseudo-aleatorios */
+    srand(time(NULL));
+    /* se establece la semilla de una nueva serie de enteros pseudo-aleatorios */
 }
 
 void aleatorio(int v [], int n) {
@@ -94,7 +94,7 @@ void printVector(int v[], int n){
 	int i;
 	for(i=0; i<n;i++){
 		if(i==(n-1)) printf("%d", v[i]);
-			else printf("%d, ", v[i]);
+		else printf("%d, ", v[i]);
 	}
     printf("\n");
 }
@@ -109,23 +109,23 @@ int ordenado(int v[], int n){
 }
 
 void testFunciona(int i){
-	int n=15, v[n];
-	aleatorio(v, n);
-	printf("Inicializacion aleatoria\n");
-	printVector(v, n);
-	printf("Ordenado? %d\n", ordenado(v, n));
-	printf("Ordenando...\n");
-	algoritmo(v, n, i);
-	printVector(v, n);
-	printf("Ordenado? %d\n", ordenado(v, n));
-	descendente( v, n);
-    printf("Inicialización descendenten\n");
-	printVector(v, n);
-	printf("Ordenado? %d\n", ordenado(v, n));
-	printf("Ordenando...\n");
-	algoritmo(v, n, i);
-	printVector(v, n);
-	printf("Ordenado? %d\n", ordenado(v, n));
+    int n=15, v[n];
+    aleatorio(v, n);
+    printf("Inicializacion aleatoria\n");
+    printVector(v, n);
+    printf("Ordenado? %d\n", ordenado(v, n));
+    printf("Ordenando...\n");
+    algoritmo(v, n, i);
+    printVector(v, n);
+    printf("Ordenado? %d\n", ordenado(v, n));
+    descendente( v, n);
+    printf("Inicialización descendente\n");
+    printVector(v, n);
+    printf("Ordenado? %d\n", ordenado(v, n));
+    printf("Ordenando...\n");
+    algoritmo(v, n, i);
+    printVector(v, n);
+    printf("Ordenado? %d\n", ordenado(v, n));
 }
 double calculartiempos(int n,int alg,int orden){
     int v[n],i;
@@ -198,9 +198,5 @@ int main(){
     test(1,2,500,8,1.12);
     test(2,2,500,8,1.17);
     test(3,2,500,8,1.17);
-
-
-
-
     return 0;
 }
