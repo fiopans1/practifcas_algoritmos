@@ -161,9 +161,6 @@ complejidad es t(n) = O(n^1.99) debido a:
 		función tiende a 0.
 
 
-//CONCLUSIÓN ORDENACIÓN POR INSERCIÓN
-
-ORDENACIÓN RÁPIDA:
 
 ORDENACIÓN RÁPIDA CON INICIALIZACIÓN ASCENDENTE (Umbral = 1)
 
@@ -477,6 +474,41 @@ complejidad es t(n) = O(n^(1.11)) debido a:
 		función tiende a 0.
 
 
-//CONCLUSIÓN ORDENACIÓN RÁPIDA
 
 //CONCLUSIÓN FINAL DE LA PRÁCTICA
+
+---OBSERVACIONES GENERALES---
+  Podemos afirmar que el algoritmo de ordenación por inserción tiene una
+    complejidad computacional de n^1.99 en el caso de vectores aleatorios,
+    la cual es ligeramente inferior a la teórica (n^2), que justamente es 
+    la complejidad si el vector esta ordenado descendentemente, mientras 
+    que si ya está ordenado esta disminuye hasta n.
+
+  También podemos concluir que en el caso de la ordenación quicksort,cuando
+    le proporcionamos un vector ascendente su complejidad computacional
+    es(UMBRAL 1=n^1.10;UMBRAL 10=n*log(n);UMBRAL 100=n^1.18),cuando está ordenado descendentemente es
+	 (UMBRAL 1=n*log(n);UMBRAL 10=n*log(n);UMBRAL 100=n*log(n)) y cuando es un
+    vector aleatorio es (UMBRAL 1=n*log(n);UMBRAL 10=n*log(n);UMBRAL 100=n^1.17).En los tres casos, hay casos que coincide
+	con la complejidad teórica y otros que varía de ella dependiendo del UMBRAL y de la ordenación, aunque en la mayoría
+	coincide con la teórica.
+
+---CONCLUSIONES---
+  Comparando los diferentes caso de cada algoritmo entre si podemos ver que el
+    mejor caso de inserción es cuando el vector ya está ordenado, y el peor es
+    cuando este está ordenado descendentemente, el aleatorio se situa en un punto
+    medio entre ambos casos. Para quicksort el mejor caso también será cuando este
+    está ordenado, seguido del vector decreciente y por último el aleatorio.
+
+  En términos de velocidad,la ordenación quicksort es mucho más rápida que la
+    ordenación por inserción tanto para vectores ordenados aleatoriamente como
+    para vectores ordenados descendentemente, esto es todo lo contrario para el
+    caso restante. Cuando el vector ya está ordenado inserción funciona mucho
+    más rápido, y es precisamente por eso que lo usaremos junto con quicksort
+    con los umbrales de 10 y 100.
+
+  En quicksort,con un vector ordenado ascendentemente,el umbral más rápido es
+    100, mientras que con el umbral 1 obtenemos los peores resultados, siendo
+    igual para el caso en el que el vector está ordenado descendentemente.
+    Por último, en el caso de los vectores aleatorios podemos observar que el
+    mejor umbral es el umbral 10, y tanto el umbral 100 como el 1 obtienen
+    resultados similares.
