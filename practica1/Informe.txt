@@ -57,13 +57,13 @@ RAM:                                 16 GB
  
 SumaSubMax 1
               n           t(n)     t(n)/n^1.8       t(n)/n^2     t(n)/n^2.2
-*            500        463.914       0.006431       0.001856       0.000535
-            1000       1834.000       0.007301       0.001834       0.000461
-            2000       7308.000       0.008355       0.001827       0.000400
-            4000      29146.000       0.009569       0.001822       0.000347
-            8000     116401.000       0.010975       0.001819       0.000301
-           16000     465288.000       0.012598       0.001818       0.000262
-           32000    1864619.000       0.014498       0.001821       0.000229
+(*)            500        302.150       0.004189       0.001209       0.000349
+              1000       1209.000       0.004813       0.001209       0.000304
+              2000       4754.000       0.005435       0.001189       0.000260
+              4000      18964.000       0.006226       0.001185       0.000226
+              8000      75910.000       0.007157       0.001186       0.000197
+             16000     303203.000       0.008210       0.001184       0.000171
+             32000    1213015.000       0.009432       0.001185       0.000149
 
 *: tiempo promedio de 1000 ejecuciones del algoritmo
 Tabla SumaSubMax1: estudio de la complejidad de la busqueda del valor máximo de la suma de
@@ -73,7 +73,7 @@ que recorre la lista desde la posicion actual comprobando con una condicion si e
 Tras el estudio del algoritmo se deduce que corresponden a un : t(n) = O(n^2) debido a:
 -n^2.2 corresponde a una cota ligeramente sobrestimada ya que cuando n tiende a infinito 
  el valor de la funcion tiende a 0.
--n^2 corresponde con la cota ajustada que tiende a 0.0018 por iteracion.
+-n^2 corresponde con la cota ajustada que tiende a 0.00118 por iteracion.
 -n^1.8 corresponde a una cota ligeramente subestimada ya que cuando n tiende a infinito 
  el valor de la funcion tiende a infinito.
 
@@ -81,13 +81,13 @@ Conclusion: t(n) = O(n^2)
 
 SumaSubMax 2
               n           t(n)     t(n)/n^0.8         t(n)/n     t(n)/n^1.2
-*            500          1.436       0.009954       0.002872       0.000829
-*           1000          2.658       0.010583       0.002658       0.000668
-*           2000          5.295       0.012107       0.002647       0.000579
-*           4000         11.191       0.014697       0.002798       0.000533
-*           8000         21.186       0.015980       0.002648       0.000439
-*          16000         42.191       0.018278       0.002637       0.000380
-*          32000         82.789       0.020599       0.002587       0.000325
+(*)            500          1.366       0.009471       0.002733       0.000789
+(*)           1000          2.929       0.011659       0.002929       0.000736
+(*)           2000          5.303       0.012125       0.002651       0.000580
+(*)           4000         10.665       0.014006       0.002666       0.000508
+(*)           8000         21.396       0.016138       0.002675       0.000443
+(*)          16000         42.352       0.018348       0.002647       0.000382
+(*)          32000         81.191       0.020202       0.002537       0.000319
 
 *: tiempo promedio de 10000 ejecuciones del algoritmo
 --En este caso la iteracion con 500 elementos es un anomala y es recomendable descalificarla--

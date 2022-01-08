@@ -86,10 +86,10 @@ double comprobarSum1(int z){
             sumaSubMax1(v,z);
         }
         t2=microsegundos();
-        printf("*");
+        printf("(*)");
         return ((t2-t1)/1000);
     }else{
-        printf(" ");
+        printf("   ");
         return t;
     }
 
@@ -109,10 +109,10 @@ double comprobarSum2(int z){
             sumaSubMax2(v,z);
         }
         t2=microsegundos();
-        printf("*");
+        printf("(*)");
         return ((t2-t1)/10000);
     }else{
-        printf(" ");
+        printf("   ");
         return t;
     }
 
