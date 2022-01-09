@@ -254,9 +254,9 @@ int main(){
 	inicializar_semilla();
 	test(1, 30,ord_ins);
 	test(2, 30,ord_rapida);
-	tabla(1,1,ascendente,ord_ins,500,8,1.01,2);
-	tabla(1,1,ascendente,ord_ins,500,8,1.01,2);
-	tabla(2,1,descendente,ord_ins,500,8,2.00,2);
+	tabla(1,1,ascendente,ord_ins,500,8,1,2);
+	tabla(1,1,ascendente,ord_ins,500,8,1,2);
+	tabla(2,1,descendente,ord_ins,500,8,2,2);
 	tabla(3,1,aleatorio,ord_ins,500,8,1.99,2);
 	tabla(1,2,ascendente,ord_rapida,500,8,1.01,1);
 	tabla(2,2,descendente,ord_rapida,500,8,1.01,1);

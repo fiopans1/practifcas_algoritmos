@@ -213,7 +213,7 @@ int main(){
     tabla(2,1,descendente,ord_sel,500,8,2,1); 
     tabla(3,1,aleatorio,ord_sel,500,8,2,1);
     tabla(1,2,ascendente,ord_shell,500,8,1.12,1);
-    tabla(2,2,descendente,ord_shell,500,8,1.17,1);
+    tabla(2,2,descendente,ord_shell,500,8,1.15,1);
     tabla(3,2,aleatorio,ord_shell,500,8,1.17,1);
     return 0;
 }
