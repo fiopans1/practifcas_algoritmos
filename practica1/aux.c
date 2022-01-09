@@ -3,6 +3,8 @@ AUTORES:
 Diego Suarez Ramos : diego.suarez.ramos@udc.es
 Ander Varela Martin : ander.varela@udc.es
 Brais Rodruiguez Gonzalez : brais.rodriguez.gonzalez@udc.es
+
+
 */
 
 #include <stdio.h>
@@ -40,6 +42,7 @@ int sumaSubMax2(int v[], int n) {
     return sumaMax;
 }
 
+//FUNCIONES AUXILIARES
 void inicializar_semilla() {
     srand(time(NULL));
 /* se establece la semilla de una nueva serie de enteros pseudo-aleatorios */
@@ -69,52 +72,8 @@ void listar_vector(int v[], int n){
     printf("]");
 }
 
-double comprobarSum1(int z){
-    double t1,t2,t;
-    int v[z];
-    int i;
-    aleatorio(v, z);
-    t1=microsegundos();
-    sumaSubMax1(v, z);
-    t2=microsegundos();
-    t=t2-t1;
-    if(t<500){
-        t1=microsegundos();
-        for(i=0;i<1000;i++){
-            sumaSubMax1(v,z);
-        }
-        t2=microsegundos();
-        printf("(*)");
-        return ((t2-t1)/1000);
-    }else{
-        printf("   ");
-        return t;
-    }
 
-}
-double comprobarSum2(int z){
-    double t1,t2,t;
-    int v[z];
-    int i;
-    aleatorio(v, z);
-    t1=microsegundos();
-    sumaSubMax2(v, z);
-    t2=microsegundos();
-    t=t2-t1;
-    if(t<500){
-        t1=microsegundos();
-        for(i=0;i<10000;i++){
-            sumaSubMax2(v,z);
-        }
-        t2=microsegundos();
-        printf("(*)");
-        return ((t2-t1)/10000);
-    }else{
-        printf("   ");
-        return t;
-    }
 
-}
 
 //TEST:
 void test1() {
@@ -148,41 +107,68 @@ void test2() {
         printf("%15d%15d\n", a, b);
     }
 }
-
-void test3() {//para sum1
-    double t,contador;
-
-	printf("SumaSubMax 1\n");
-    printf("%15s%15s%15s","n","t(n)","t(n)/n^1.8");
-    printf("%15s%15s\n","t(n)/n^2","t(n)/n^2.2");
-    for(contador=500;contador<=32000;contador*=2){
-        t=comprobarSum1(contador);
-        printf("%15.0f%15.3f%15.6f",contador,t,t/pow(contador,1.8));
-        printf("%15.6f%15.6f\n",t/pow(contador,2),t/pow(contador,2.2));
+//FUNCIONES PARA TABLA
+void printfalgord(int alg, int orden){
+	if(alg==1) printf("SumaSubMax 1\n");
+	if(alg==2) printf("SumaSubMax 2\n");
+}
+double calculartiempos(int (*sumasub)(int v[],int n),int z){
+    double t1,t2,t;
+    int v[z];
+    int i;
+    aleatorio(v, z);
+    t1=microsegundos();
+    sumasub(v, z);
+    t2=microsegundos();
+    t=t2-t1;
+    if(t<500){
+        t1=microsegundos();
+        for(i=0;i<10000;i++){
+            sumasub(v,z);
+        }
+        t2=microsegundos();
+        printf("(*)");
+        return ((t2-t1)/1000);
+    }else{
+        printf("   ");
+        return t;
     }
+
 }
 
-void test4() {//para sum2
-    double t,contador;
-	printf("SumaSubMax 2\n");
-    printf("%15s%15s%15s","n","t(n)","t(n)/n^0.8");
-	printf("%15s%15s\n","t(n)/n","t(n)/n^1.2");
-    for(contador=500;contador<=32000;contador*=2){
-        t=comprobarSum2(contador);
-        printf("%15.0f%15.3f%15.6f",contador,t,t/pow(contador,0.8));
-        printf("%15.6f%15.6f\n",t/pow(contador,1),t/pow(contador,1.2));
-    }
+void tabla (int (*sumasub)(int v[], int n),int initcnt,int nmax,int modo, float p){//para sum1
+    double t,contador=initcnt;
+    int i;
+
+	//llamar a funcionprintf("SumaSubMax 1\n");
+    printf("%15s%15s%15s","n","t(n)","t(n)/n^1.8");
+    printf("%15s%15s\n","t(n)/n^2","t(n)/n^2.2");
+	if(modo==1){
+		for(i=1;i<=nmax;i++){
+			t=calculartiempos(sumasub,contador);
+			printf("%12.0f%15.3f%15.6f",contador,t,t/pow(contador,p-0.2));
+			printf("%15.6f%15.6f\n",t/(contador*log(contador)),t/pow(contador,p+0.2));
+			contador=contador*2;
+		}
+	}else{
+		for(i=1;i<=nmax;i++){
+			t=calculartiempos(sumasub,contador);
+			printf("%12.0f%15.3f%15.6f",contador,t,t/pow(contador,p-0.2));
+			printf("%15.6f%15.6f\n",t/pow(contador,p),t/pow(contador,p+0.2));
+			contador=contador*2;
+		}	
+	}
 }
 
 int main() {
     inicializar_semilla();
-    test1();
-    test2();
-    test3();
-    test3();
-    test3();
-    test4();
-    test4();
-    test4();
+    tabla(sumaSubMax1,500,7,2,2);
+    tabla(sumaSubMax1,500,7,2,2);
+    tabla(sumaSubMax1,500,7,2,2);
+    tabla(sumaSubMax1,500,7,2,2);
+    tabla(sumaSubMax2,500,7,2,1);
+    tabla(sumaSubMax2,500,7,2,1);
+    tabla(sumaSubMax2,500,7,2,1);
+    tabla(sumaSubMax2,500,7,2,1);
     return 0;
 }

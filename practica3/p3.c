@@ -16,7 +16,7 @@ hacer los apartados 3 y 4 de inser, 3, 4 y 5*/
 #include <math.h>
 
 #define UMBRAL 10
-
+//ALGORITMOS
 void ord_ins (int v [], int n){
 	int i, x, j;
 	for(i=1; i<n; i++){
@@ -83,11 +83,8 @@ void ord_rapida (int v[], int n){
 	if (UMBRAL > 1)
 		ord_ins(v, n);
 }
+//FUNCIONES AUXILIARES
 
-void algoritmo(int v[], int n, int i){
-	if(i==1) ord_ins(v, n);
-	if(i==2) ord_rapida(v, n);
-}
 
 double microsegundos() { /* obtiene la hora del sistema en microsegundos */
 	struct timeval t;
@@ -99,7 +96,7 @@ double microsegundos() { /* obtiene la hora del sistema en microsegundos */
 
 void inicializar_semilla() {
 	srand(time(NULL));
-	/* se establece la semilla de una nueva serie de enteros pseudo-aleatorios */
+/*se establece la semilla de una nueva serie de enteros pseudo-aleatorios */
 }
 
 void aleatorio(int v [], int n) {
@@ -122,11 +119,14 @@ void descendente(int v[], int n){
 
 }
 
-void iniciarorden(int v[], int n,int elegir){
-	if(elegir==1) ascendente(v,n);
-	if(elegir==2) descendente(v,n);
-	if(elegir==3) aleatorio(v,n);
+void printfalgord(int alg, int orden){
+	if(alg==1) printf("Ordenacion por inserccion ");
+	if(alg==2) printf("Ordenacion rapida ");
+	if(orden==1) printf("con inicialización ascendente\n");
+	if(orden==2) printf("con inicialización descendente\n");
+	if(orden==3) printf("con inicialización aleatorio\n");
 }
+//TESTEAR ORDENACION
 
 void printVector(int v[], int n){
 	int i;
@@ -146,25 +146,49 @@ int ordenado(int v[], int n){
 	}
 	return 1;
 }
+void test(int i, int n,void (*alg_ord)(int v[],int n)){
+	int v[n];
+	//Ascendente
+	aleatorio(v, n);
+	printfalgord(i, 3);
+	printVector(v, n);
+	printf("Ordenado? %d\n", ordenado(v, n));
+	printf("Ordenando...\n");
+	alg_ord(v,n);
+	printVector(v, n);
+	printf("Ordenado? %d\n", ordenado(v, n));
+	//Descendente
+	descendente( v, n);
+	printfalgord(i, 2);
+	printVector(v, n);
+	printf("Ordenado? %d\n", ordenado(v, n));
+	printf("Ordenando...\n");
+	alg_ord(v,n);
+	printVector(v, n);
+	printf("Ordenado? %d\n", ordenado(v, n));
+}
+//CALCULAR TABLA
+double calculartiempos(int n,void (*ordenmatriz)(int v [], int n),
+	void (*alg_ord)(int v[],int n))
+	{
 
-double calculartiempos(int n,int alg,int orden){
 	int v[n],i;
 	double t1,t2,t3,t4,t;
-	iniciarorden(v,n,orden);
+	ordenmatriz(v,n);
 	t1=microsegundos();
-	algoritmo(v,n,alg);
+	alg_ord(v,n);
 	t2=microsegundos();
 	t=t2-t1;
 	if(t<500){
 		t1=microsegundos();
 		for(i=0;i<1000;i++){
-			iniciarorden(v,n,orden);
-			algoritmo(v,n,alg);
+			ordenmatriz(v,n);
+			alg_ord(v,n);
 		}
 		t2=microsegundos();
 		t3=microsegundos();
 		for(i=0;i<1000;i++){
-			iniciarorden(v,n,orden);
+			ordenmatriz(v,n);
 		}
 		t4=microsegundos();
 		printf("(*)");
@@ -176,37 +200,10 @@ double calculartiempos(int n,int alg,int orden){
 	}
 }
 
-void printfalgord(int alg, int orden){
-	if(alg==1) printf("Ordenacion por inserccion ");
-	if(alg==2) printf("Ordenacion rapida ");
-	if(orden==1) printf("con inicialización ascendente\n");
-	if(orden==2) printf("con inicialización descendente\n");
-	if(orden==3) printf("con inicialización aleatorio\n");
-}
+void tabla(int orden,int alg,void (*ordenmatriz)(int v [], int n),
+	void (*alg_ord)(int v[],int n),int tamini,int nmax,float p, int modo)
+	{
 
-void test(int i, int n){
-	int v[n];
-	//Ascendente
-	aleatorio(v, n);
-	printfalgord(i, 3);
-	printVector(v, n);
-	printf("Ordenado? %d\n", ordenado(v, n));
-	printf("Ordenando...\n");
-	algoritmo(v, n, i);
-	printVector(v, n);
-	printf("Ordenado? %d\n", ordenado(v, n));
-	//Descendente
-	descendente( v, n);
-	printfalgord(i, 2);
-	printVector(v, n);
-	printf("Ordenado? %d\n", ordenado(v, n));
-	printf("Ordenando...\n");
-	algoritmo(v, n, i);
-	printVector(v, n);
-	printf("Ordenado? %d\n", ordenado(v, n));
-}
-
-void tiempos2(int orden,int alg,int tamini,int nmax,float p, int modo) {
 	double t,contador=tamini;
 	int i;
 	printfalgord(alg,orden);
@@ -218,14 +215,15 @@ void tiempos2(int orden,int alg,int tamini,int nmax,float p, int modo) {
 	printf("%.2f\n",p+0.2);
 	if(modo==1){
 		for(i=1;i<=nmax;i++){
-			t=calculartiempos(contador,alg,orden);
+			t=calculartiempos(contador,ordenmatriz,alg_ord);
 			printf("%12.0f%15.3f%15.6f",contador,t,t/pow(contador,p-0.2));
-			printf("%15.6f%15.6f\n",t/(contador*log(contador)),t/pow(contador,p+0.2));
+			printf("%15.6f%15.6f\n",t/(contador*log(contador)),
+				t/pow(contador,p+0.2));
 			contador=contador*2;
 		}
 	}else{
 		for(i=1;i<=nmax;i++){
-			t=calculartiempos(contador,alg,orden);
+			t=calculartiempos(contador,ordenmatriz,alg_ord);
 			printf("%12.0f%15.3f%15.6f",contador,t,t/pow(contador,p-0.2));
 			printf("%15.6f%15.6f\n",t/pow(contador,p),t/pow(contador,p+0.2));
 			contador=contador*2;
@@ -254,14 +252,15 @@ void tiempos2(int orden,int alg,int tamini,int nmax,float p, int modo) {
 */
 int main(){
 	inicializar_semilla();
-	//test(1, 30);
-	//test(2, 30);
-	tiempos2(1,1,500,8,1.01,2);
-	tiempos2(1,1,500,8,2.00,2);
-	tiempos2(1,1,500,8,1.99,2);
-	tiempos2(1,2,500,8,1.01,1);
-	tiempos2(2,2,500,8,1.01,1);
-	tiempos2(3,2,500,8,1.01,1);
+	test(1, 30,ord_ins);
+	test(2, 30,ord_rapida);
+	tabla(1,1,ascendente,ord_ins,500,8,1.01,2);
+	tabla(1,1,ascendente,ord_ins,500,8,1.01,2);
+	tabla(2,1,descendente,ord_ins,500,8,2.00,2);
+	tabla(3,1,aleatorio,ord_ins,500,8,1.99,2);
+	tabla(1,2,ascendente,ord_rapida,500,8,1.01,1);
+	tabla(2,2,descendente,ord_rapida,500,8,1.01,1);
+	tabla(3,2,aleatorio,ord_rapida,500,8,1.01,1);
 
 	
 	return 0;

@@ -87,14 +87,8 @@ void imprimir_arbol(cola *c){
 	printf("\nPeso: %d\n", peso);
 }
 //FIN COLA
-double microsegundos() { /* obtiene la hora del sistema en microsegundos */
-	struct timeval t;
-	if (gettimeofday(&t, NULL) < 0 ){
-		return 0.0;
-	}
-	return (t.tv_usec + t.tv_sec * 1000000.0);
-}	
 
+//ALGORITMO
 void prim(matriz m, int nodos, cola *aristas) {
 	/* calcular el árbol de recubrimiento mínimo devolviendo
 		las aristas del arbol en la cola ’aristas’ */
@@ -133,7 +127,7 @@ void prim(matriz m, int nodos, cola *aristas) {
 }
 
 
-
+//FUNCIONES MATRIZ
 
 matriz crear_matriz(int n) {
 	int i;
@@ -168,6 +162,13 @@ void liberar_matriz(matriz m, int n) {
 }
 
 //Test:
+double microsegundos() { /* obtiene la hora del sistema en microsegundos */
+	struct timeval t;
+	if (gettimeofday(&t, NULL) < 0 ){
+		return 0.0;
+	}
+	return (t.tv_usec + t.tv_sec * 1000000.0);
+}	
 
 int elegirTest(int n){
 	int i=0;
@@ -211,16 +212,16 @@ matriz iniciarMatrizTest(int n){
 	return m;
 }
 
-void test(int opcion){
+void test(void (*alg)(matriz m, int nodos, cola *aristas),int opcion){
 	int n=elegirTest(opcion);
 	matriz m;
 	cola c;
 	m= iniciarMatrizTest(n);
-	prim(m, n, &c);
+	alg(m, n, &c);
 	imprimir_arbol(&c);
 	liberar_matriz(m,n);
 }
-double calcularTiempos(int n){
+double calcularTiempos(void (*alg)(matriz m, int nodos, cola *aristas),int n){
 	int i;
 	double t1,t2,t;
 	matriz m;
@@ -229,7 +230,7 @@ double calcularTiempos(int n){
 	inicializar_matriz(m, n);
 	t1=microsegundos();
 
-	prim(m, n, &c);
+	alg(m, n, &c);
 
 	t2=microsegundos();
 	t=t2-t1;
@@ -237,7 +238,7 @@ double calcularTiempos(int n){
 		t1=microsegundos();
 		for(i=0;i<1000;i++){
 
-			prim(m, n, &c);
+			alg(m, n, &c);
 		}
 		t2=microsegundos();
 		printf("(*)");
@@ -251,7 +252,10 @@ double calcularTiempos(int n){
 
 }
 
-void tiempos(int tamini, int nmax, float p) {
+void tabla(void (*alg)(matriz m, int nodos, cola *aristas),
+	int tamini, int nmax, float p, int modo) 
+	{
+
 	double t, contador=tamini;
 	int i;
 	printf("Algoritmo de prim con inicializacion aleatoria\n");
@@ -261,25 +265,36 @@ void tiempos(int tamini, int nmax, float p) {
 	printf("%.2f",p);
 	printf("%13s","t(n)/n^");
 	printf("%.2f\n",p+0.2);
-	for(i=1;i<=nmax && contador<TAM_MAX;i++){
-		t=calcularTiempos(contador);
-		printf("%12.0f%15.3f%15.6f",contador,t,t/pow(contador,p-0.2));
-		printf("%15.6f%15.6f\n",t/pow(contador,p),t/pow(contador,p+0.2));
-		contador=contador*2;
+	if (modo==1){
+		for(i=1;i<=nmax && contador<TAM_MAX;i++){
+			t=calcularTiempos(alg,contador);
+			printf("%12.0f%15.3f%15.6f",contador,t,t/pow(contador,p-0.2));
+			printf("%15.6f%15.6f\n",t/pow(contador,p),t/pow(contador,p+0.2));
+			contador=contador*2;
+		}
+	}else{
+		for(i=1;i<=nmax && contador<TAM_MAX;i++){
+			t=calcularTiempos(alg,contador);
+			printf("%12.0f%15.3f%15.6f",contador,t,t/pow(contador,p-0.2));
+			printf("%15.6f%15.6f\n",t/(contador*log(contador)),
+				t/pow(contador,p+0.2));
+			contador=contador*2;
+		}		
 	}
 }
 /*Para la funcion tiempos:
--1 PARAMETRO: Valor inicial
--2 PARAMETRO: Numero de columnas
--3 PARAMETRO: z correspondiente a n^z*/
+-1 PARAMETRO: ALGORITMO
+-2 PARAMETRO: Valor inicial
+-3 PARAMETRO: Numero de columnas
+-4 PARAMETRO: z correspondiente a n^z*/
 int main(){
 	
-	test(1);
-	test(2);
-	test(3);
-	tiempos(10,7,2);
-	tiempos(10,7,2);
-	tiempos(10,7,2);
+	test(prim,1);
+	test(prim,2);
+	test(prim,3);
+	tabla(prim,10,7,2,1);
+	tabla(prim,10,7,2,1);
+	tabla(prim,10,7,2,1);
 
 	
 	return 0;

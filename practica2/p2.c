@@ -50,11 +50,8 @@ void ord_shell(int v[], int n){
 
 }
 
-//seleccionar un algoritmo
-void algoritmo(int v[], int n, int i){
-	if(i==1) ord_sel(v, n);
-	if(i==2) ord_shell(v, n);
-}
+
+//FUNCIONES AUXILIARES
 double microsegundos() { /* obtiene la hora del sistema en microsegundos */
     struct timeval t;
     if (gettimeofday(&t, NULL) < 0 ){
@@ -84,12 +81,7 @@ void descendente(int v[], int n){
 		v[n-i] = i;
 
 }
-void iniciarorden(int v[], int n,int elegir){
-    if(elegir==1) ascendente(v,n);
-    if(elegir==2) descendente(v,n);
-    if(elegir==3) aleatorio(v,n);
-}
-
+//FUNCIONES PARA TESTEAR ALGORITMO
 void printVector(int v[], int n){
 	int i;
 	for(i=0; i<n;i++){
@@ -109,14 +101,14 @@ int ordenado(int v[], int n){
 	return 1;
 }
 
-void testFunciona(int i){
+void testFunciona(void (*alg_ord)(int v[],int n),int i){
     int n=15, v[n];
     aleatorio(v, n);
     printf("Inicializacion aleatoria\n");
     printVector(v, n);
     printf("Ordenado? %d\n", ordenado(v, n));
     printf("Ordenando...\n");
-    algoritmo(v, n, i);
+    alg_ord(v,n);
     printVector(v, n);
     printf("Ordenado? %d\n", ordenado(v, n));
     descendente( v, n);
@@ -124,28 +116,31 @@ void testFunciona(int i){
     printVector(v, n);
     printf("Ordenado? %d\n", ordenado(v, n));
     printf("Ordenando...\n");
-    algoritmo(v, n, i);
+    alg_ord(v,n);
     printVector(v, n);
     printf("Ordenado? %d\n", ordenado(v, n));
 }
-double calculartiempos(int n,int alg,int orden){
+double calculartiempos(int n,void (*alg_ord)(int v[],int n),
+    void (*ordenmatriz)(int v [], int n))
+    {
+
     int v[n],i;
     double t1,t2,t3,t4,t;
-    iniciarorden(v,n,orden);
+    ordenmatriz(v,n);
     t1=microsegundos();
-    algoritmo(v,n,alg);
+    alg_ord(v,n);
     t2=microsegundos();
     t=t2-t1;
     if(t<500){
         t1=microsegundos();
         for(i=0;i<1000;i++){
-            iniciarorden(v,n,orden);
-            algoritmo(v,n,alg);
+            ordenmatriz(v,n);
+            alg_ord(v,n);
         }
         t2=microsegundos();
         t3=microsegundos();
         for(i=0;i<1000;i++){
-            iniciarorden(v,n,orden);
+            ordenmatriz(v,n);
         }
         t4=microsegundos();
         printf("(*)");
@@ -165,7 +160,11 @@ void printfalgord(int alg, int orden){
 
 
 }
-void test(int orden,int alg,int tamini,int nmax,float p) {
+
+void tabla(int orden,int alg,void (*ordenmatriz)(int v [], int n),
+    void (*alg_ord)(int v[],int n),int tamini,int nmax,int modo,float p)
+    {
+
     double t,contador=tamini;
     int i;
 	printfalgord(alg,orden);
@@ -175,29 +174,46 @@ void test(int orden,int alg,int tamini,int nmax,float p) {
     printf("%.2f",p);
     printf("%13s","t(n)/n^");
     printf("%.2f\n",p+0.2);
-
+    if(modo==1){
     for(i=1;i<=nmax;i++){
-        t=calculartiempos(contador,alg,orden);
+        t=calculartiempos(contador,alg_ord,ordenmatriz);
         printf("%12.0f%15.3f%15.6f",contador,t,t/pow(contador,p-0.2));
         printf("%15.6f%15.6f\n",t/pow(contador,p),t/pow(contador,p+0.2));
         contador=contador*2;
     }
+    }else{
+		for(i=1;i<=nmax;i++){
+			t=calculartiempos(contador,alg_ord,ordenmatriz);
+			printf("%12.0f%15.3f%15.6f",contador,t,t/pow(contador,p-0.2));
+			printf("%15.6f%15.6f\n",t/(contador*log(contador)),
+				t/pow(contador,p+0.2));
+			contador=contador*2;
+		}	        
+    }
 }
 
-//1=Seleccion
-//2=Shell
+
+/*ARGUMENTOS TABLA:
+1-ORDEN
 //1=ascendente
 //2=descendente
 //3=aleatorio
-//hipotesis para shell:  ascendente:1.12, descendente:1.15, aleatorio:1.17
+2-ALG
+//1=Seleccion
+//2=Shell
+3-FUNCION ALG
+4-TAMAÑO INICIAL
+5-COLUMNAS
+6-MODO
+7-N ELEVADO A K, LA K*/
 int main(){
     inicializar_semilla();
-    test(1,1,500,8,2);
-    test(1,1,500,8,2); 
-    test(2,1,500,8,2);
-    test(3,1,500,8,2);
-    test(1,2,500,8,1.12);
-    test(2,2,500,8,1.17);
-    test(3,2,500,8,1.17);
+    tabla(1,1,ascendente,ord_sel,500,8,2,1);
+    tabla(1,1,ascendente,ord_sel,500,8,2,1);
+    tabla(2,1,descendente,ord_sel,500,8,2,1); 
+    tabla(3,1,aleatorio,ord_sel,500,8,2,1);
+    tabla(1,2,ascendente,ord_shell,500,8,1.12,1);
+    tabla(2,2,descendente,ord_shell,500,8,1.17,1);
+    tabla(3,2,aleatorio,ord_shell,500,8,1.17,1);
     return 0;
 }
